@@ -128,7 +128,7 @@ function Nav() {
           <a href="#about" className="hover:text-brand transition">من نحن</a>
           <a href="#contact" className="hover:text-brand transition">تواصل معنا</a>
         </nav>
-        <a href="tel:+966500000000" className="hidden sm:inline-flex items-center gap-2 bg-gradient-primary text-primary-foreground font-bold px-5 py-2.5 rounded-lg shadow-glow hover:scale-105 transition-transform">
+        <a href="tel:+966559527343" className="hidden sm:inline-flex items-center gap-2 bg-gradient-primary text-primary-foreground font-bold px-5 py-2.5 rounded-lg shadow-glow hover:scale-105 transition-transform">
           <Phone className="w-4 h-4" />
           احجز الآن
         </a>
@@ -294,7 +294,7 @@ function Offers() {
                     </div>
                   ))}
                 </div>
-                <a href="tel:+966500000000" className="block text-center bg-gradient-primary text-primary-foreground font-bold py-3.5 rounded-xl hover:scale-[1.02] transition-transform shadow-glow">
+                <a href="tel:+966559527343" className="block text-center bg-gradient-primary text-primary-foreground font-bold py-3.5 rounded-xl hover:scale-[1.02] transition-transform shadow-glow">
                   احجز موعدك الآن
                 </a>
               </div>
@@ -308,7 +308,7 @@ function Offers() {
             <div className="text-2xl md:text-3xl font-black">احصل على فلتر المكيف مجاناً</div>
             <div className="opacity-90 mt-1">عند تغيير فلتر الهواء في أي زيارة</div>
           </div>
-          <a href="tel:+966500000000" className="bg-background text-foreground font-black px-8 py-4 rounded-xl hover:scale-105 transition">
+          <a href="tel:+966559527343" className="bg-background text-foreground font-black px-8 py-4 rounded-xl hover:scale-105 transition">
             استفد الآن
           </a>
         </div>
@@ -398,7 +398,7 @@ function CTA() {
                 اتصل بنا الآن أو زر مركزنا واحصل على فحص مجاني شامل لسيارتك.
               </p>
               <div className="flex flex-wrap gap-4">
-                <a href="tel:+966500000000" className="inline-flex items-center gap-2 bg-gradient-primary text-primary-foreground font-bold px-8 py-4 rounded-xl shadow-glow hover:scale-105 transition">
+                <a href="tel:+966559527343" className="inline-flex items-center gap-2 bg-gradient-primary text-primary-foreground font-bold px-8 py-4 rounded-xl shadow-glow hover:scale-105 transition">
                   <Phone className="w-5 h-5" />
                   اتصل الآن
                 </a>
@@ -410,7 +410,7 @@ function CTA() {
             </div>
             <div className="space-y-4">
               {[
-                { icon: Phone, label: "اتصل بنا", value: "+966 50 000 0000" },
+                { icon: Phone, label: "اتصل بنا", value: "+966 55 952 7343" },
                 { icon: MapPin, label: "الموقع", value: "الرياض، المملكة العربية السعودية" },
                 { icon: Clock, label: "ساعات العمل", value: "السبت - الخميس: 8 ص - 11 م" },
               ].map((c) => (
