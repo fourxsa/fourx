@@ -1,10 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Phone, MapPin, Clock, Droplet, SprayCan, Wrench, ShieldCheck, Sparkles, Gauge, CheckCircle2, ArrowLeft, Star } from "lucide-react";
+import { Phone, MapPin, Clock, Droplet, SprayCan, Wrench, ShieldCheck, Sparkles, Gauge, CheckCircle2, ArrowLeft, Star, MessageCircle, Send } from "lucide-react";
+import { useState } from "react";
+import { z } from "zod";
+import { toast, Toaster } from "sonner";
 import logoAsset from "@/assets/logo.png.asset.json";
 import heroImg from "@/assets/hero.jpg";
 import oilsImg from "@/assets/oils.jpg";
 import detailingImg from "@/assets/detailing.jpg";
 import serviceImg from "@/assets/service.jpg";
+
+const WHATSAPP_NUMBER = "966559527343";
+const WHATSAPP_DISPLAY = "+966 55 952 7343";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -94,10 +100,13 @@ function Index() {
       <Marquee />
       <Services />
       <Offers />
+      <QuoteForm />
       <About />
       <Testimonials />
       <CTA />
       <Footer />
+      <FloatingWhatsApp />
+      <Toaster position="top-center" richColors />
     </div>
   );
 }
@@ -119,9 +128,9 @@ function Nav() {
           <a href="#about" className="hover:text-brand transition">من نحن</a>
           <a href="#contact" className="hover:text-brand transition">تواصل معنا</a>
         </nav>
-        <a href="tel:+966500000000" className="hidden sm:inline-flex items-center gap-2 bg-gradient-primary text-primary-foreground font-bold px-5 py-2.5 rounded-lg shadow-glow hover:scale-105 transition-transform">
-          <Phone className="w-4 h-4" />
-          احجز الآن
+        <a href="#quote" className="hidden sm:inline-flex items-center gap-2 bg-gradient-primary text-primary-foreground font-bold px-5 py-2.5 rounded-lg shadow-glow hover:scale-105 transition-transform">
+          <Sparkles className="w-4 h-4" />
+          اطلب عرض
         </a>
       </div>
     </header>
@@ -285,7 +294,7 @@ function Offers() {
                     </div>
                   ))}
                 </div>
-                <a href="tel:+966500000000" className="block text-center bg-gradient-primary text-primary-foreground font-bold py-3.5 rounded-xl hover:scale-[1.02] transition-transform shadow-glow">
+                <a href="tel:+966559527343" className="block text-center bg-gradient-primary text-primary-foreground font-bold py-3.5 rounded-xl hover:scale-[1.02] transition-transform shadow-glow">
                   احجز موعدك الآن
                 </a>
               </div>
@@ -299,7 +308,7 @@ function Offers() {
             <div className="text-2xl md:text-3xl font-black">احصل على فلتر المكيف مجاناً</div>
             <div className="opacity-90 mt-1">عند تغيير فلتر الهواء في أي زيارة</div>
           </div>
-          <a href="tel:+966500000000" className="bg-background text-foreground font-black px-8 py-4 rounded-xl hover:scale-105 transition">
+          <a href="tel:+966559527343" className="bg-background text-foreground font-black px-8 py-4 rounded-xl hover:scale-105 transition">
             استفد الآن
           </a>
         </div>
@@ -389,7 +398,7 @@ function CTA() {
                 اتصل بنا الآن أو زر مركزنا واحصل على فحص مجاني شامل لسيارتك.
               </p>
               <div className="flex flex-wrap gap-4">
-                <a href="tel:+966500000000" className="inline-flex items-center gap-2 bg-gradient-primary text-primary-foreground font-bold px-8 py-4 rounded-xl shadow-glow hover:scale-105 transition">
+                <a href="tel:+966559527343" className="inline-flex items-center gap-2 bg-gradient-primary text-primary-foreground font-bold px-8 py-4 rounded-xl shadow-glow hover:scale-105 transition">
                   <Phone className="w-5 h-5" />
                   اتصل الآن
                 </a>
@@ -401,7 +410,7 @@ function CTA() {
             </div>
             <div className="space-y-4">
               {[
-                { icon: Phone, label: "اتصل بنا", value: "+966 50 000 0000" },
+                { icon: Phone, label: "اتصل بنا", value: "+966 55 952 7343" },
                 { icon: MapPin, label: "الموقع", value: "الرياض، المملكة العربية السعودية" },
                 { icon: Clock, label: "ساعات العمل", value: "السبت - الخميس: 8 ص - 11 م" },
               ].map((c) => (
@@ -442,5 +451,194 @@ function Footer() {
         </div>
       </div>
     </footer>
+  );
+}
+
+const quoteSchema = z.object({
+  name: z
+    .string()
+    .trim()
+    .min(2, { message: "الاسم يجب أن يكون حرفين على الأقل" })
+    .max(60, { message: "الاسم طويل جداً" }),
+  phone: z
+    .string()
+    .trim()
+    .regex(/^(\+?966|0)?5\d{8}$/, { message: "رقم جوال سعودي غير صحيح" }),
+  service: z.string().min(1, { message: "اختر نوع الخدمة" }),
+  notes: z.string().trim().max(300, { message: "الملاحظات طويلة جداً" }).optional(),
+});
+
+const SERVICE_OPTIONS = [
+  "تغيير زيت المحرك",
+  "غسيل وتلميع",
+  "فحص شامل",
+  "صيانة عامة",
+  "زينة وإكسسوارات",
+  "أخرى",
+];
+
+function QuoteForm() {
+  const [form, setForm] = useState({ name: "", phone: "", service: "", notes: "" });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const result = quoteSchema.safeParse(form);
+    if (!result.success) {
+      const fieldErrors: Record<string, string> = {};
+      for (const issue of result.error.issues) {
+        const key = issue.path[0];
+        if (typeof key === "string") fieldErrors[key] = issue.message;
+      }
+      setErrors(fieldErrors);
+      toast.error("يرجى تصحيح الحقول المطلوبة");
+      return;
+    }
+    setErrors({});
+    setSubmitting(true);
+    const { name, phone, service, notes } = result.data;
+    const message =
+      `طلب عرض سعر من موقع 4X Service%0A` +
+      `الاسم: ${encodeURIComponent(name)}%0A` +
+      `الجوال: ${encodeURIComponent(phone)}%0A` +
+      `الخدمة: ${encodeURIComponent(service)}` +
+      (notes ? `%0Aملاحظات: ${encodeURIComponent(notes)}` : "");
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+    toast.success("تم فتح واتساب لإرسال طلبك");
+    setForm({ name: "", phone: "", service: "", notes: "" });
+    setSubmitting(false);
+  };
+
+  const update = (k: string, v: string) => {
+    setForm((f) => ({ ...f, [k]: v }));
+    if (errors[k]) setErrors((e) => ({ ...e, [k]: "" }));
+  };
+
+  const fieldClass = (k: string) =>
+    `w-full bg-background border rounded-xl px-4 py-3.5 text-sm outline-none transition focus:ring-2 focus:ring-primary/50 ${
+      errors[k] ? "border-destructive" : "border-border focus:border-primary"
+    }`;
+
+  return (
+    <section id="quote" className="py-24 md:py-32 bg-surface relative overflow-hidden">
+      <div className="absolute inset-0 diagonal-stripe opacity-40" />
+      <div className="relative max-w-6xl mx-auto px-5 lg:px-10 grid lg:grid-cols-5 gap-10 items-center">
+        <div className="lg:col-span-2 space-y-6">
+          <div className="text-brand font-bold text-sm tracking-widest">طلب عرض سعر</div>
+          <h2 className="text-4xl md:text-5xl font-black leading-tight">
+            احصل على عرضك خلال <span className="text-brand">دقائق</span>
+          </h2>
+          <p className="text-muted-foreground leading-relaxed">
+            املأ النموذج وسنتواصل معك عبر واتساب فوراً بأفضل عرض يناسب سيارتك.
+          </p>
+          <a
+            href={`https://wa.me/${WHATSAPP_NUMBER}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 bg-[#25D366] text-white font-bold px-6 py-3.5 rounded-xl hover:scale-105 transition shadow-glow"
+          >
+            <MessageCircle className="w-5 h-5" />
+            {WHATSAPP_DISPLAY}
+          </a>
+        </div>
+
+        <form
+          onSubmit={handleSubmit}
+          className="lg:col-span-3 bg-background border border-border rounded-3xl p-6 md:p-8 shadow-card space-y-5"
+          noValidate
+        >
+          <div className="grid sm:grid-cols-2 gap-5">
+            <div>
+              <label className="block text-sm font-bold mb-2">الاسم الكامل</label>
+              <input
+                type="text"
+                value={form.name}
+                maxLength={60}
+                onChange={(e) => update("name", e.target.value)}
+                placeholder="مثال: عبدالله"
+                className={fieldClass("name")}
+                autoComplete="name"
+              />
+              {errors.name && <p className="text-destructive text-xs mt-1.5">{errors.name}</p>}
+            </div>
+            <div>
+              <label className="block text-sm font-bold mb-2">رقم الجوال</label>
+              <input
+                type="tel"
+                dir="ltr"
+                value={form.phone}
+                maxLength={15}
+                onChange={(e) => update("phone", e.target.value)}
+                placeholder="05xxxxxxxx"
+                className={`${fieldClass("phone")} text-right`}
+                autoComplete="tel"
+              />
+              {errors.phone && <p className="text-destructive text-xs mt-1.5">{errors.phone}</p>}
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-bold mb-2">الخدمة المطلوبة</label>
+            <select
+              value={form.service}
+              onChange={(e) => update("service", e.target.value)}
+              className={fieldClass("service")}
+            >
+              <option value="">— اختر الخدمة —</option>
+              {SERVICE_OPTIONS.map((s) => (
+                <option key={s} value={s}>
+                  {s}
+                </option>
+              ))}
+            </select>
+            {errors.service && <p className="text-destructive text-xs mt-1.5">{errors.service}</p>}
+          </div>
+
+          <div>
+            <label className="block text-sm font-bold mb-2">
+              ملاحظات <span className="text-muted-foreground font-normal">(اختياري)</span>
+            </label>
+            <textarea
+              value={form.notes}
+              maxLength={300}
+              rows={3}
+              onChange={(e) => update("notes", e.target.value)}
+              placeholder="نوع السيارة، الموديل، أو أي تفاصيل إضافية"
+              className={`${fieldClass("notes")} resize-none`}
+            />
+            {errors.notes && <p className="text-destructive text-xs mt-1.5">{errors.notes}</p>}
+          </div>
+
+          <button
+            type="submit"
+            disabled={submitting}
+            className="w-full inline-flex items-center justify-center gap-2 bg-gradient-primary text-primary-foreground font-black py-4 rounded-xl shadow-glow hover:scale-[1.01] transition disabled:opacity-60"
+          >
+            <Send className="w-5 h-5" />
+            إرسال الطلب عبر واتساب
+          </button>
+          <p className="text-xs text-muted-foreground text-center">
+            بالضغط على "إرسال" سيتم توجيهك إلى واتساب لإكمال طلبك.
+          </p>
+        </form>
+      </div>
+    </section>
+  );
+}
+
+function FloatingWhatsApp() {
+  return (
+    <a
+      href={`https://wa.me/${WHATSAPP_NUMBER}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="تواصل عبر واتساب"
+      className="fixed bottom-6 left-6 z-50 w-14 h-14 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-glow hover:scale-110 transition-transform"
+    >
+      <MessageCircle className="w-7 h-7" />
+      <span className="absolute inline-flex h-full w-full rounded-full bg-[#25D366] opacity-40 animate-ping" />
+    </a>
   );
 }
