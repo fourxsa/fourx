@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Phone, MapPin, Clock, Droplet, SprayCan, Wrench, ShieldCheck, Sparkles, Gauge, CheckCircle2, ArrowLeft, Star, MessageCircle, Send } from "lucide-react";
-import { useState } from "react";
+import { Phone, MapPin, Clock, Droplet, SprayCan, Wrench, ShieldCheck, Sparkles, Gauge, CheckCircle2, ArrowLeft, Star, MessageCircle, Send, Navigation } from "lucide-react";
+import { useState, useMemo } from "react";
 import { z } from "zod";
 import { toast, Toaster } from "sonner";
 import logoAsset from "@/assets/logo.png.asset.json";
@@ -8,6 +8,7 @@ import heroImg from "@/assets/hero.jpg";
 import oilsImg from "@/assets/oils.jpg";
 import detailingImg from "@/assets/detailing.jpg";
 import serviceImg from "@/assets/service.jpg";
+import { branches } from "@/data/branches";
 
 const WHATSAPP_NUMBER = "966559527343";
 const WHATSAPP_DISPLAY = "+966 55 952 7343";
@@ -102,6 +103,7 @@ function Index() {
       <Offers />
       <QuoteForm />
       <About />
+      <Branches />
       <Testimonials />
       <CTA />
       <Footer />
