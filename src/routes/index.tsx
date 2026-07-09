@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Phone, MapPin, Clock, Droplet, SprayCan, Wrench, ShieldCheck, Sparkles, Gauge, CheckCircle2, ArrowLeft, Star, MessageCircle, Send } from "lucide-react";
-import { useState } from "react";
+import { Phone, MapPin, Clock, Droplet, SprayCan, Wrench, ShieldCheck, Sparkles, Gauge, CheckCircle2, ArrowLeft, Star, MessageCircle, Send, Navigation } from "lucide-react";
+import { useState, useMemo } from "react";
 import { z } from "zod";
 import { toast, Toaster } from "sonner";
 import logoAsset from "@/assets/logo.png.asset.json";
@@ -8,6 +8,7 @@ import heroImg from "@/assets/hero.jpg";
 import oilsImg from "@/assets/oils.jpg";
 import detailingImg from "@/assets/detailing.jpg";
 import serviceImg from "@/assets/service.jpg";
+import { branches } from "@/data/branches";
 
 const WHATSAPP_NUMBER = "966559527343";
 const WHATSAPP_DISPLAY = "+966 55 952 7343";
@@ -102,6 +103,7 @@ function Index() {
       <Offers />
       <QuoteForm />
       <About />
+      <Branches />
       <Testimonials />
       <CTA />
       <Footer />
@@ -125,6 +127,7 @@ function Nav() {
         <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
           <a href="#services" className="hover:text-brand transition">الخدمات</a>
           <a href="#offers" className="hover:text-brand transition">العروض</a>
+          <a href="#branches" className="hover:text-brand transition">الفروع</a>
           <a href="#about" className="hover:text-brand transition">من نحن</a>
           <a href="#contact" className="hover:text-brand transition">تواصل معنا</a>
         </nav>
@@ -446,6 +449,7 @@ function Footer() {
         <div className="flex gap-6 text-sm text-muted-foreground">
           <a href="#services" className="hover:text-brand">الخدمات</a>
           <a href="#offers" className="hover:text-brand">العروض</a>
+          <a href="#branches" className="hover:text-brand">الفروع</a>
           <a href="#about" className="hover:text-brand">من نحن</a>
           <a href="#contact" className="hover:text-brand">تواصل</a>
         </div>
@@ -640,5 +644,96 @@ function FloatingWhatsApp() {
       <MessageCircle className="w-7 h-7" />
       <span className="absolute inline-flex h-full w-full rounded-full bg-[#25D366] opacity-40 animate-ping" />
     </a>
+  );
+}
+
+function Branches() {
+  const [city, setCity] = useState<string>("الكل");
+  const cities = useMemo(() => ["الكل", ...Array.from(new Set(branches.map((b) => b.city)))], []);
+  const list = city === "الكل" ? branches : branches.filter((b) => b.city === city);
+
+  return (
+    <section id="branches" className="py-24 md:py-32 relative">
+      <div className="max-w-7xl mx-auto px-5 lg:px-10">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
+          <div className="max-w-2xl">
+            <div className="text-brand font-bold text-sm tracking-widest mb-3">فروعنا</div>
+            <h2 className="text-4xl md:text-6xl font-black leading-tight">
+              <span className="text-brand">{branches.length}+</span> فرع في خدمتك
+            </h2>
+            <p className="text-muted-foreground mt-4 text-lg">
+              نغطي الرياض، القصيم، والدمام — اختر أقرب فرع إليك.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {cities.map((c) => (
+              <button
+                key={c}
+                onClick={() => setCity(c)}
+                className={`px-5 py-2.5 rounded-full text-sm font-bold border transition ${
+                  city === c
+                    ? "bg-gradient-primary text-primary-foreground border-transparent shadow-glow"
+                    : "bg-surface border-border hover:border-primary/50"
+                }`}
+              >
+                {c}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {list.map((b) => (
+            <div
+              key={b.id}
+              className="group relative bg-surface border border-border rounded-2xl p-6 hover:border-primary/60 transition-all hover:-translate-y-1 shadow-card flex flex-col"
+            >
+              <div className="flex items-start justify-between gap-3 mb-4">
+                <div>
+                  <h3 className="text-lg font-black leading-tight">{b.name}</h3>
+                  <div className="inline-flex items-center gap-1 text-xs text-muted-foreground mt-1">
+                    <MapPin className="w-3.5 h-3.5 text-brand" />
+                    {b.city}
+                  </div>
+                </div>
+                <div className="w-10 h-10 rounded-lg bg-gradient-primary flex items-center justify-center shrink-0 shadow-glow">
+                  <Wrench className="w-5 h-5 text-primary-foreground" />
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-1.5 mb-5">
+                {b.services.map((s) => (
+                  <span
+                    key={s}
+                    className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/20"
+                  >
+                    {s}
+                  </span>
+                ))}
+              </div>
+
+              <div className="mt-auto grid grid-cols-2 gap-2">
+                <a
+                  href={`tel:+966${b.phone.replace(/^0/, "")}`}
+                  className="inline-flex items-center justify-center gap-1.5 bg-background border border-border rounded-xl py-2.5 text-sm font-bold hover:border-primary transition"
+                >
+                  <Phone className="w-4 h-4 text-brand" />
+                  اتصال
+                </a>
+                <a
+                  href={b.mapUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-1.5 bg-gradient-primary text-primary-foreground rounded-xl py-2.5 text-sm font-bold hover:scale-[1.02] transition"
+                >
+                  <Navigation className="w-4 h-4" />
+                  الموقع
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
