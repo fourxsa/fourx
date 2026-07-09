@@ -127,6 +127,7 @@ function Nav() {
         <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
           <a href="#services" className="hover:text-brand transition">الخدمات</a>
           <a href="#offers" className="hover:text-brand transition">العروض</a>
+          <a href="#branches" className="hover:text-brand transition">الفروع</a>
           <a href="#about" className="hover:text-brand transition">من نحن</a>
           <a href="#contact" className="hover:text-brand transition">تواصل معنا</a>
         </nav>
@@ -448,6 +449,7 @@ function Footer() {
         <div className="flex gap-6 text-sm text-muted-foreground">
           <a href="#services" className="hover:text-brand">الخدمات</a>
           <a href="#offers" className="hover:text-brand">العروض</a>
+          <a href="#branches" className="hover:text-brand">الفروع</a>
           <a href="#about" className="hover:text-brand">من نحن</a>
           <a href="#contact" className="hover:text-brand">تواصل</a>
         </div>
