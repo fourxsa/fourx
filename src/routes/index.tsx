@@ -128,9 +128,9 @@ function Nav() {
           <a href="#about" className="hover:text-brand transition">من نحن</a>
           <a href="#contact" className="hover:text-brand transition">تواصل معنا</a>
         </nav>
-        <a href="tel:+966559527343" className="hidden sm:inline-flex items-center gap-2 bg-gradient-primary text-primary-foreground font-bold px-5 py-2.5 rounded-lg shadow-glow hover:scale-105 transition-transform">
-          <Phone className="w-4 h-4" />
-          احجز الآن
+        <a href="#quote" className="hidden sm:inline-flex items-center gap-2 bg-gradient-primary text-primary-foreground font-bold px-5 py-2.5 rounded-lg shadow-glow hover:scale-105 transition-transform">
+          <Sparkles className="w-4 h-4" />
+          اطلب عرض
         </a>
       </div>
     </header>
