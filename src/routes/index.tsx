@@ -100,10 +100,13 @@ function Index() {
       <Marquee />
       <Services />
       <Offers />
+      <QuoteForm />
       <About />
       <Testimonials />
       <CTA />
       <Footer />
+      <FloatingWhatsApp />
+      <Toaster position="top-center" richColors />
     </div>
   );
 }
