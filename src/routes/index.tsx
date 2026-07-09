@@ -8,6 +8,62 @@ import serviceImg from "@/assets/service.jpg";
 
 export const Route = createFileRoute("/")({
   component: Index,
+  head: () => ({
+    meta: [
+      { title: "فوراكس سيرفس 4X Service | زيوت وعناية وصيانة السيارات" },
+      {
+        name: "description",
+        content:
+          "فوراكس سيرفس - مركز متخصص في تغيير زيوت السيارات، الفلاتر، تلميع وعناية، وصيانة شاملة بأحدث الأجهزة وأسعار تنافسية. احجز فحصك المجاني اليوم.",
+      },
+      {
+        name: "keywords",
+        content:
+          "فوراكس سيرفس, 4X Service, تغيير زيت السيارة, زيوت السيارات, زيت روك, ROC oil, صيانة سيارات, تلميع سيارات, زينة سيارات, فلاتر زيت, فحص سيارة مجاني, ورشة سيارات, مركز صيانة السيارات, خدمة سيارات السعودية",
+      },
+      { name: "author", content: "4X Service" },
+      { name: "robots", content: "index, follow" },
+      { httpEquiv: "content-language", content: "ar" },
+
+      { property: "og:title", content: "فوراكس سيرفس | زيوت وعناية وصيانة السيارات" },
+      {
+        property: "og:description",
+        content: "زيوت أصلية، فحص مجاني، وعروض حصرية لصيانة سيارتك مع فريق فني معتمد.",
+      },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "/" },
+      { property: "og:locale", content: "ar_SA" },
+      { property: "og:site_name", content: "4X Service" },
+
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "فوراكس سيرفس | زيوت وعناية وصيانة السيارات" },
+      {
+        name: "twitter:description",
+        content: "زيوت أصلية، فحص مجاني، وعروض حصرية لصيانة سيارتك.",
+      },
+
+      { name: "theme-color", content: "#0d1b2a" },
+    ],
+    links: [{ rel: "canonical", href: "/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "AutomotiveBusiness",
+          name: "4X Service - فوراكس سيرفس",
+          description:
+            "مركز متخصص في تغيير الزيوت، العناية، التلميع، وصيانة السيارات الشاملة.",
+          areaServed: "SA",
+          address: { "@type": "PostalAddress", addressCountry: "SA", addressRegion: "الرياض" },
+          telephone: "+966500000000",
+          openingHours: "Sa-Th 08:00-23:00",
+          priceRange: "$$",
+          aggregateRating: { "@type": "AggregateRating", ratingValue: "4.9", reviewCount: "250" },
+        }),
+      },
+    ],
+  }),
 });
 
 const services = [
