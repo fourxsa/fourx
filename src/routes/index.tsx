@@ -1,24 +1,390 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Phone, MapPin, Clock, Droplet, SprayCan, Wrench, ShieldCheck, Sparkles, Gauge, CheckCircle2, ArrowLeft, Star } from "lucide-react";
+import logoAsset from "@/assets/logo.png.asset.json";
+import heroImg from "@/assets/hero.jpg";
+import oilsImg from "@/assets/oils.jpg";
+import detailingImg from "@/assets/detailing.jpg";
+import serviceImg from "@/assets/service.jpg";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
+const services = [
+  { icon: Droplet, title: "تغيير الزيوت", desc: "زيوت أصلية عالية الجودة لجميع أنواع المركبات مع فلاتر معتمدة." },
+  { icon: SprayCan, title: "زينة وتلميع", desc: "تلميع خارجي، تنظيف داخلي، وحماية سيراميك احترافية." },
+  { icon: Wrench, title: "صيانة شاملة", desc: "فحص محرك، فرامل، تعليق، ونظام تبريد بأحدث الأجهزة." },
+  { icon: Gauge, title: "فحص مجاني", desc: "فحص كمبيوتر شامل مجاناً مع كل خدمة زيت." },
+  { icon: ShieldCheck, title: "قطع أصلية", desc: "قطع غيار معتمدة مع ضمان على الخدمة." },
+  { icon: Sparkles, title: "غسيل داخلي وخارجي", desc: "تنظيف عميق للمقاعد والفرش بأدوات متخصصة." },
+];
+
+const offers = [
+  { price: "79", title: "4 علب زيت روك 5000", subtitle: "مع فلتر زيت + فحص مجاني", tag: "الأكثر طلباً", img: oilsImg },
+  { price: "109", title: "4 علب زيت روك 10000", subtitle: "مع فلتر زيت + فحص مجاني", tag: "عرض مميز", img: oilsImg },
+];
+
+const testimonials = [
+  { name: "أحمد الشمري", text: "خدمة ممتازة وسرعة في الإنجاز. الأسعار مناسبة والفريق محترف جداً.", rating: 5 },
+  { name: "فهد العتيبي", text: "أفضل مركز جربته لتغيير الزيت، فحص شامل ونصائح مفيدة.", rating: 5 },
+  { name: "خالد المطيري", text: "تعامل راقي ونظافة عالية. سيارتي طلعت كالجديدة بعد التلميع.", rating: 5 },
+];
+
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen bg-background text-foreground font-sans overflow-x-hidden">
+      <Nav />
+      <Hero />
+      <Marquee />
+      <Services />
+      <Offers />
+      <About />
+      <Testimonials />
+      <CTA />
+      <Footer />
     </div>
+  );
+}
+
+function Nav() {
+  return (
+    <header className="sticky top-0 z-50 backdrop-blur-lg bg-background/80 border-b border-border">
+      <div className="max-w-7xl mx-auto px-5 lg:px-10 h-20 flex items-center justify-between">
+        <a href="#home" className="flex items-center gap-3">
+          <img src={logoAsset.url} alt="4X Service" className="h-12 w-12" />
+          <div className="flex flex-col leading-tight">
+            <span className="text-lg font-black tracking-tight">فوراكس سيرفس</span>
+            <span className="text-[11px] text-muted-foreground tracking-widest">4X SERVICE</span>
+          </div>
+        </a>
+        <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
+          <a href="#services" className="hover:text-brand transition">الخدمات</a>
+          <a href="#offers" className="hover:text-brand transition">العروض</a>
+          <a href="#about" className="hover:text-brand transition">من نحن</a>
+          <a href="#contact" className="hover:text-brand transition">تواصل معنا</a>
+        </nav>
+        <a href="tel:+966500000000" className="hidden sm:inline-flex items-center gap-2 bg-gradient-primary text-primary-foreground font-bold px-5 py-2.5 rounded-lg shadow-glow hover:scale-105 transition-transform">
+          <Phone className="w-4 h-4" />
+          احجز الآن
+        </a>
+      </div>
+    </header>
+  );
+}
+
+function Hero() {
+  return (
+    <section id="home" className="relative min-h-[92vh] flex items-center overflow-hidden">
+      <div className="absolute inset-0">
+        <img src={heroImg} alt="خدمة السيارات" className="w-full h-full object-cover opacity-40" width={1920} height={1200} />
+        <div className="absolute inset-0 bg-gradient-hero opacity-90" />
+        <div className="absolute inset-0 diagonal-stripe" />
+      </div>
+
+      <div className="relative max-w-7xl mx-auto px-5 lg:px-10 py-24 grid lg:grid-cols-12 gap-12 items-center w-full">
+        <div className="lg:col-span-7 space-y-8">
+          <div className="inline-flex items-center gap-2 bg-primary/15 border border-primary/30 text-primary px-4 py-2 rounded-full text-sm font-bold">
+            <Sparkles className="w-4 h-4" />
+            مركز صيانة السيارات #1 في المنطقة
+          </div>
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.95] tracking-tight">
+            سيارتك تستحق
+            <br />
+            <span className="bg-gradient-primary bg-clip-text text-transparent">خدمة استثنائية</span>
+          </h1>
+          <p className="text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed">
+            زيوت أصلية، أجهزة فحص متطورة، وفريق فني معتمد. نعتني بسيارتك كأنها سيارتنا — بسرعة، احترافية، وأسعار تنافسية.
+          </p>
+          <div className="flex flex-wrap gap-4">
+            <a href="#offers" className="group inline-flex items-center gap-3 bg-gradient-primary text-primary-foreground font-bold px-8 py-4 rounded-xl shadow-glow hover:scale-105 transition-transform">
+              شاهد العروض الحصرية
+              <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+            </a>
+            <a href="#services" className="inline-flex items-center gap-2 border border-border bg-surface/60 backdrop-blur px-8 py-4 rounded-xl font-bold hover:bg-surface transition">
+              خدماتنا
+            </a>
+          </div>
+          <div className="flex flex-wrap gap-8 pt-6 border-t border-border/50">
+            {[
+              { n: "+15", l: "سنة خبرة" },
+              { n: "+25K", l: "عميل راضٍ" },
+              { n: "24/7", l: "دعم فني" },
+            ].map((s) => (
+              <div key={s.l}>
+                <div className="text-3xl font-black text-brand">{s.n}</div>
+                <div className="text-xs text-muted-foreground mt-1">{s.l}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="lg:col-span-5 relative">
+          <div className="relative rounded-3xl overflow-hidden shadow-card border border-border/50">
+            <img src={detailingImg} alt="تلميع السيارات" className="w-full h-[500px] object-cover" width={1200} height={900} loading="lazy" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
+            <div className="absolute bottom-6 right-6 left-6 bg-surface/90 backdrop-blur-lg border border-primary/30 rounded-2xl p-5">
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-xs text-muted-foreground">عرض اليوم</div>
+                  <div className="text-2xl font-black">فلتر مكيف مجاناً</div>
+                  <div className="text-sm text-brand mt-1">عند تغيير فلتر الهواء</div>
+                </div>
+                <div className="bg-gradient-primary rounded-xl p-3">
+                  <Sparkles className="w-8 h-8 text-primary-foreground" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Marquee() {
+  const items = ["زيوت أصلية", "فحص مجاني", "قطع معتمدة", "فنيون خبراء", "أسعار تنافسية", "خدمة سريعة"];
+  return (
+    <div className="border-y border-border bg-surface overflow-hidden">
+      <div className="flex gap-16 py-5 animate-[scroll_30s_linear_infinite] whitespace-nowrap">
+        {[...items, ...items, ...items].map((t, i) => (
+          <div key={i} className="flex items-center gap-3 text-lg font-bold text-muted-foreground">
+            <span className="w-2 h-2 rounded-full bg-primary" />
+            {t}
+          </div>
+        ))}
+      </div>
+      <style>{`@keyframes scroll { from { transform: translateX(0) } to { transform: translateX(-33.333%) } }`}</style>
+    </div>
+  );
+}
+
+function Services() {
+  return (
+    <section id="services" className="py-24 md:py-32 relative">
+      <div className="max-w-7xl mx-auto px-5 lg:px-10">
+        <div className="max-w-2xl mb-16">
+          <div className="text-brand font-bold text-sm tracking-widest mb-3">خدماتنا</div>
+          <h2 className="text-4xl md:text-6xl font-black leading-tight">
+            كل ما تحتاجه سيارتك <span className="text-brand">تحت سقف واحد</span>
+          </h2>
+        </div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {services.map((s, i) => (
+            <div key={i} className="group relative bg-surface border border-border rounded-2xl p-8 hover:border-primary/60 transition-all hover:-translate-y-1 shadow-card">
+              <div className="w-14 h-14 rounded-xl bg-gradient-primary flex items-center justify-center mb-6 shadow-glow">
+                <s.icon className="w-7 h-7 text-primary-foreground" />
+              </div>
+              <h3 className="text-xl font-black mb-2">{s.title}</h3>
+              <p className="text-muted-foreground leading-relaxed">{s.desc}</p>
+              <div className="absolute top-6 left-6 text-6xl font-black text-primary/10 group-hover:text-primary/20 transition">
+                0{i + 1}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Offers() {
+  return (
+    <section id="offers" className="py-24 md:py-32 bg-surface relative">
+      <div className="absolute inset-0 diagonal-stripe opacity-50" />
+      <div className="relative max-w-7xl mx-auto px-5 lg:px-10">
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 bg-primary/15 border border-primary/30 text-primary px-4 py-2 rounded-full text-sm font-bold mb-4">
+            عروض حصرية لفترة محدودة
+          </div>
+          <h2 className="text-4xl md:text-6xl font-black">اغتنم العرض قبل انتهائه</h2>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-8">
+          {offers.map((o, i) => (
+            <div key={i} className="relative bg-background border-2 border-border rounded-3xl overflow-hidden hover:border-primary transition-all group shadow-card">
+              <div className="absolute top-6 right-6 z-10 bg-gradient-primary text-primary-foreground text-xs font-black px-3 py-1.5 rounded-full">
+                {o.tag}
+              </div>
+              <div className="relative h-56 overflow-hidden bg-gradient-hero">
+                <img src={o.img} alt={o.title} className="w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-700" width={1200} height={900} loading="lazy" />
+              </div>
+              <div className="p-8">
+                <div className="flex items-start justify-between gap-4 mb-6">
+                  <div>
+                    <h3 className="text-2xl md:text-3xl font-black leading-tight mb-2">{o.title}</h3>
+                    <p className="text-muted-foreground">{o.subtitle}</p>
+                  </div>
+                  <div className="shrink-0 text-left">
+                    <div className="text-5xl md:text-6xl font-black bg-gradient-primary bg-clip-text text-transparent leading-none">
+                      {o.price}
+                    </div>
+                    <div className="text-xs text-muted-foreground mt-1">ريال سعودي</div>
+                  </div>
+                </div>
+                <div className="space-y-2 mb-6">
+                  {["4 علب زيت أصلي", "فلتر زيت جديد", "فحص مجاني شامل"].map((f) => (
+                    <div key={f} className="flex items-center gap-2 text-sm">
+                      <CheckCircle2 className="w-4 h-4 text-brand" />
+                      {f}
+                    </div>
+                  ))}
+                </div>
+                <a href="tel:+966500000000" className="block text-center bg-gradient-primary text-primary-foreground font-bold py-3.5 rounded-xl hover:scale-[1.02] transition-transform shadow-glow">
+                  احجز موعدك الآن
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-10 bg-gradient-primary rounded-3xl p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6 text-primary-foreground">
+          <div>
+            <div className="text-sm font-bold opacity-80 mb-1">عرض إضافي</div>
+            <div className="text-2xl md:text-3xl font-black">احصل على فلتر المكيف مجاناً</div>
+            <div className="opacity-90 mt-1">عند تغيير فلتر الهواء في أي زيارة</div>
+          </div>
+          <a href="tel:+966500000000" className="bg-background text-foreground font-black px-8 py-4 rounded-xl hover:scale-105 transition">
+            استفد الآن
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function About() {
+  return (
+    <section id="about" className="py-24 md:py-32">
+      <div className="max-w-7xl mx-auto px-5 lg:px-10 grid lg:grid-cols-2 gap-16 items-center">
+        <div className="relative">
+          <div className="rounded-3xl overflow-hidden shadow-card border border-border">
+            <img src={serviceImg} alt="ورشة السيارات" className="w-full h-[520px] object-cover" width={1200} height={900} loading="lazy" />
+          </div>
+          <div className="absolute -bottom-8 -right-8 bg-gradient-primary rounded-2xl p-6 shadow-glow max-w-[220px]">
+            <div className="text-4xl font-black text-primary-foreground">+15</div>
+            <div className="text-sm text-primary-foreground/90 font-bold mt-1">سنة من الخبرة في خدمة السيارات</div>
+          </div>
+        </div>
+        <div className="space-y-6">
+          <div className="text-brand font-bold text-sm tracking-widest">من نحن</div>
+          <h2 className="text-4xl md:text-6xl font-black leading-tight">
+            نجمع بين <span className="text-brand">الخبرة</span> والتقنية الحديثة
+          </h2>
+          <p className="text-lg text-muted-foreground leading-relaxed">
+            فوراكس سيرفس مركز متخصص في خدمات السيارات، نقدم لك تجربة صيانة متكاملة من تغيير الزيوت والفلاتر إلى العناية والتلميع والصيانة الشاملة. نستخدم زيوت وقطع أصلية معتمدة، ويقودنا فريق من الفنيين الخبراء.
+          </p>
+          <ul className="grid sm:grid-cols-2 gap-3">
+            {["زيوت أصلية 100%", "ضمان على الخدمة", "أجهزة فحص متطورة", "أسعار تنافسية", "خدمة سريعة", "فنيون معتمدون"].map((f) => (
+              <li key={f} className="flex items-center gap-2 bg-surface border border-border rounded-lg px-4 py-3">
+                <CheckCircle2 className="w-5 h-5 text-brand shrink-0" />
+                <span className="font-medium">{f}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Testimonials() {
+  return (
+    <section className="py-24 md:py-32 bg-surface">
+      <div className="max-w-7xl mx-auto px-5 lg:px-10">
+        <div className="text-center mb-16">
+          <div className="text-brand font-bold text-sm tracking-widest mb-3">آراء عملائنا</div>
+          <h2 className="text-4xl md:text-6xl font-black">يثق بنا الآلاف من قائدي السيارات</h2>
+        </div>
+        <div className="grid md:grid-cols-3 gap-6">
+          {testimonials.map((t, i) => (
+            <div key={i} className="bg-background border border-border rounded-2xl p-8 shadow-card">
+              <div className="flex gap-1 mb-4">
+                {Array.from({ length: t.rating }).map((_, j) => (
+                  <Star key={j} className="w-5 h-5 fill-primary text-primary" />
+                ))}
+              </div>
+              <p className="text-lg leading-relaxed mb-6">"{t.text}"</p>
+              <div className="flex items-center gap-3 pt-4 border-t border-border">
+                <div className="w-11 h-11 rounded-full bg-gradient-primary flex items-center justify-center font-black text-primary-foreground">
+                  {t.name[0]}
+                </div>
+                <div className="font-bold">{t.name}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CTA() {
+  return (
+    <section id="contact" className="py-24 md:py-32">
+      <div className="max-w-6xl mx-auto px-5 lg:px-10">
+        <div className="relative bg-gradient-hero rounded-3xl p-10 md:p-16 overflow-hidden border border-border shadow-card">
+          <div className="absolute inset-0 diagonal-stripe opacity-40" />
+          <div className="relative grid lg:grid-cols-2 gap-10 items-center">
+            <div>
+              <h2 className="text-4xl md:text-5xl font-black leading-tight mb-4">
+                جاهز لتجربة خدمة <span className="text-brand">من نوع مختلف؟</span>
+              </h2>
+              <p className="text-lg text-muted-foreground mb-8">
+                اتصل بنا الآن أو زر مركزنا واحصل على فحص مجاني شامل لسيارتك.
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <a href="tel:+966500000000" className="inline-flex items-center gap-2 bg-gradient-primary text-primary-foreground font-bold px-8 py-4 rounded-xl shadow-glow hover:scale-105 transition">
+                  <Phone className="w-5 h-5" />
+                  اتصل الآن
+                </a>
+                <a href="#" className="inline-flex items-center gap-2 border border-border bg-surface/60 backdrop-blur px-8 py-4 rounded-xl font-bold hover:bg-surface transition">
+                  <MapPin className="w-5 h-5" />
+                  موقعنا على الخريطة
+                </a>
+              </div>
+            </div>
+            <div className="space-y-4">
+              {[
+                { icon: Phone, label: "اتصل بنا", value: "+966 50 000 0000" },
+                { icon: MapPin, label: "الموقع", value: "الرياض، المملكة العربية السعودية" },
+                { icon: Clock, label: "ساعات العمل", value: "السبت - الخميس: 8 ص - 11 م" },
+              ].map((c) => (
+                <div key={c.label} className="flex items-center gap-4 bg-background/60 backdrop-blur border border-border rounded-xl p-5">
+                  <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center shrink-0">
+                    <c.icon className="w-6 h-6 text-primary-foreground" />
+                  </div>
+                  <div>
+                    <div className="text-xs text-muted-foreground">{c.label}</div>
+                    <div className="font-bold">{c.value}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="border-t border-border bg-surface py-12">
+      <div className="max-w-7xl mx-auto px-5 lg:px-10 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="flex items-center gap-3">
+          <img src={logoAsset.url} alt="4X Service" className="h-10 w-10" />
+          <div>
+            <div className="font-black">فوراكس سيرفس</div>
+            <div className="text-xs text-muted-foreground">© {new Date().getFullYear()} جميع الحقوق محفوظة</div>
+          </div>
+        </div>
+        <div className="flex gap-6 text-sm text-muted-foreground">
+          <a href="#services" className="hover:text-brand">الخدمات</a>
+          <a href="#offers" className="hover:text-brand">العروض</a>
+          <a href="#about" className="hover:text-brand">من نحن</a>
+          <a href="#contact" className="hover:text-brand">تواصل</a>
+        </div>
+      </div>
+    </footer>
   );
 }
