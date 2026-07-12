@@ -258,6 +258,93 @@ function Services() {
   );
 }
 
+function Products() {
+  const [filter, setFilter] = useState<"الكل" | "محرك" | "ناقل حركة">("الكل");
+  const filtered = useMemo(
+    () => (filter === "الكل" ? products : products.filter((p) => p.category === filter)),
+    [filter],
+  );
+  const cats: Array<"الكل" | "محرك" | "ناقل حركة"> = ["الكل", "محرك", "ناقل حركة"];
+
+  return (
+    <section id="products" className="py-24 md:py-32 relative overflow-hidden">
+      <div className="absolute inset-0 diagonal-stripe opacity-30" />
+      <div className="relative max-w-7xl mx-auto px-5 lg:px-10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+          <div className="max-w-2xl">
+            <div className="text-brand font-bold text-sm tracking-widest mb-3">منتجاتنا</div>
+            <h2 className="text-4xl md:text-6xl font-black leading-tight">
+              زيوت <span className="text-brand">ROC GZX</span> الأصلية
+            </h2>
+            <p className="text-muted-foreground mt-4 text-lg">
+              زيوت محرك وناقل حركة تخليقية بتقنية أمريكية، مصنوعة من زيوت بكر 100% من أرامكو.
+            </p>
+          </div>
+          <div className="flex gap-2 flex-wrap">
+            {cats.map((c) => (
+              <button
+                key={c}
+                onClick={() => setFilter(c)}
+                className={`px-5 py-2.5 rounded-full text-sm font-bold border transition ${
+                  filter === c
+                    ? "bg-gradient-primary text-primary-foreground border-transparent shadow-glow"
+                    : "bg-surface border-border hover:border-primary/50"
+                }`}
+              >
+                {c}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {filtered.map((p) => (
+            <div
+              key={p.id}
+              className="group relative bg-surface border border-border rounded-3xl overflow-hidden hover:border-primary/60 transition-all hover:-translate-y-1 shadow-card"
+            >
+              {p.badge && (
+                <div className="absolute top-4 right-4 z-10 bg-gradient-primary text-primary-foreground text-[10px] font-black px-2.5 py-1 rounded-full">
+                  {p.badge}
+                </div>
+              )}
+              <div className={`relative h-64 bg-gradient-to-br ${p.accent} flex items-center justify-center overflow-hidden`}>
+                <div className="absolute inset-0 bg-black/10" />
+                <img
+                  src={p.image}
+                  alt={`${p.name} ${p.grade}`}
+                  className="relative h-full w-auto object-contain drop-shadow-2xl group-hover:scale-110 transition-transform duration-500"
+                  loading="lazy"
+                />
+              </div>
+              <div className="p-5 space-y-2">
+                <div className="flex items-center justify-between gap-2">
+                  <div className="text-xs text-muted-foreground font-bold tracking-wider">{p.category}</div>
+                  <div className="text-xs text-brand font-black">{p.grade}</div>
+                </div>
+                <h3 className="text-lg font-black leading-tight">{p.name}</h3>
+                <div className="text-[11px] text-muted-foreground font-mono">{p.spec}</div>
+                <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">{p.desc}</p>
+                <a
+                  href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+                    `مرحباً، أبغى استفسر عن منتج ${p.name} ${p.grade}`,
+                  )}`}
+                  target="_blank"
+                  rel="noopener"
+                  className="mt-3 inline-flex items-center gap-2 text-sm font-bold text-brand hover:gap-3 transition-all"
+                >
+                  استفسر عن السعر
+                  <ArrowLeft className="w-4 h-4" />
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Offers() {
   return (
     <section id="offers" className="py-24 md:py-32 bg-surface relative">
