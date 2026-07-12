@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Phone, MapPin, Clock, Droplet, SprayCan, Wrench, ShieldCheck, Sparkles, Gauge, CheckCircle2, ArrowLeft, Star, MessageCircle, Send, Navigation } from "lucide-react";
+import { Phone, MapPin, Clock, Droplet, SprayCan, Wrench, ShieldCheck, Sparkles, Gauge, CheckCircle2, ArrowLeft, Star, MessageCircle, Send, Navigation, Instagram, Facebook, Youtube, Music2, AtSign, Twitter } from "lucide-react";
 import { useState, useMemo } from "react";
 import { z } from "zod";
 import { toast, Toaster } from "sonner";
@@ -518,23 +518,59 @@ function CTA() {
   );
 }
 
+const SOCIAL_LINKS = [
+  { label: "واتساب", href: `https://wa.me/${WHATSAPP_NUMBER}`, Icon: MessageCircle, color: "hover:text-[#25D366]" },
+  { label: "انستقرام", href: "https://instagram.com/fourxservice", Icon: Instagram, color: "hover:text-[#E4405F]" },
+  { label: "تيك توك", href: "https://www.tiktok.com/@fourxservice", Icon: Music2, color: "hover:text-foreground" },
+  { label: "يوتيوب", href: "https://www.youtube.com/@fourxservice", Icon: Youtube, color: "hover:text-[#FF0000]" },
+  { label: "ثريدز", href: "https://www.threads.net/@fourxservice", Icon: AtSign, color: "hover:text-foreground" },
+  { label: "فيسبوك", href: "https://www.facebook.com/4xservice", Icon: Facebook, color: "hover:text-[#1877F2]" },
+  { label: "X", href: "https://x.com/4xservice", Icon: Twitter, color: "hover:text-foreground" },
+];
+
+function SocialIcons({ className = "" }: { className?: string }) {
+  return (
+    <div className={`flex flex-wrap items-center gap-2 ${className}`}>
+      {SOCIAL_LINKS.map(({ label, href, Icon, color }) => (
+        <a
+          key={label}
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={label}
+          title={label}
+          className={`w-10 h-10 grid place-items-center rounded-full border border-border bg-background text-muted-foreground transition hover:scale-110 hover:border-current ${color}`}
+        >
+          <Icon className="w-5 h-5" />
+        </a>
+      ))}
+    </div>
+  );
+}
+
 function Footer() {
   return (
     <footer className="border-t border-border bg-surface py-12">
-      <div className="max-w-7xl mx-auto px-5 lg:px-10 flex flex-col md:flex-row items-center justify-between gap-6">
-        <div className="flex items-center gap-3">
-          <img src={logoAsset.url} alt="4X Service" className="h-10 w-10" />
-          <div>
-            <div className="font-black">فوراكس سيرفس</div>
-            <div className="text-xs text-muted-foreground">© {new Date().getFullYear()} جميع الحقوق محفوظة</div>
+      <div className="max-w-7xl mx-auto px-5 lg:px-10 flex flex-col gap-8">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-3">
+            <img src={logoAsset.url} alt="4X Service" className="h-10 w-10" />
+            <div>
+              <div className="font-black">فوراكس سيرفس</div>
+              <div className="text-xs text-muted-foreground">© {new Date().getFullYear()} جميع الحقوق محفوظة</div>
+            </div>
+          </div>
+          <div className="flex gap-6 text-sm text-muted-foreground">
+            <a href="#services" className="hover:text-brand">الخدمات</a>
+            <a href="#offers" className="hover:text-brand">العروض</a>
+            <a href="#branches" className="hover:text-brand">الفروع</a>
+            <a href="#about" className="hover:text-brand">من نحن</a>
+            <a href="#contact" className="hover:text-brand">تواصل</a>
           </div>
         </div>
-        <div className="flex gap-6 text-sm text-muted-foreground">
-          <a href="#services" className="hover:text-brand">الخدمات</a>
-          <a href="#offers" className="hover:text-brand">العروض</a>
-          <a href="#branches" className="hover:text-brand">الفروع</a>
-          <a href="#about" className="hover:text-brand">من نحن</a>
-          <a href="#contact" className="hover:text-brand">تواصل</a>
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-6 border-t border-border">
+          <div className="text-sm text-muted-foreground font-semibold">تابعنا على وسائل التواصل</div>
+          <SocialIcons />
         </div>
       </div>
     </footer>
@@ -629,6 +665,10 @@ function QuoteForm() {
             <MessageCircle className="w-5 h-5" />
             {WHATSAPP_DISPLAY}
           </a>
+          <div className="pt-2">
+            <div className="text-sm font-bold text-muted-foreground mb-3">تابعنا</div>
+            <SocialIcons />
+          </div>
         </div>
 
         <form
