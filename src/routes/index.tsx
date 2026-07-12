@@ -665,6 +665,10 @@ function QuoteForm() {
             <MessageCircle className="w-5 h-5" />
             {WHATSAPP_DISPLAY}
           </a>
+          <div className="pt-2">
+            <div className="text-sm font-bold text-muted-foreground mb-3">تابعنا</div>
+            <SocialIcons />
+          </div>
         </div>
 
         <form
