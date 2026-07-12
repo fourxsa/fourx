@@ -66,7 +66,6 @@ export const Route = createFileRoute("/")({
           address: { "@type": "PostalAddress", addressCountry: "SA", addressRegion: "الرياض" },
           telephone: "+966500000000",
           openingHours: "Sa-Th 08:00-23:00",
-          priceRange: "$$",
           aggregateRating: { "@type": "AggregateRating", ratingValue: "4.9", reviewCount: "250" },
         }),
       },
