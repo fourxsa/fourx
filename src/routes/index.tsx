@@ -425,7 +425,7 @@ function About() {
             فوراكس سيرفس مركز متخصص في خدمات السيارات، نقدم لك تجربة صيانة متكاملة من تغيير الزيوت والفلاتر إلى العناية والتلميع والصيانة الشاملة. نستخدم زيوت وقطع أصلية معتمدة، ويقودنا فريق من الفنيين الخبراء.
           </p>
           <ul className="grid sm:grid-cols-2 gap-3">
-            {["زيوت أصلية 100%", "ضمان على الخدمة", "أجهزة فحص متطورة", "أسعار تنافسية", "خدمة سريعة", "فنيون معتمدون"].map((f) => (
+            {["زيوت أصلية 100%", "ضمان على الخدمة", "أجهزة فحص متطورة", "خدمة سريعة", "فنيون معتمدون"].map((f) => (
               <li key={f} className="flex items-center gap-2 bg-surface border border-border rounded-lg px-4 py-3">
                 <CheckCircle2 className="w-5 h-5 text-brand shrink-0" />
                 <span className="font-medium">{f}</span>
