@@ -129,6 +129,7 @@ function Nav() {
         <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
           <a href="#services" className="hover:text-brand transition">الخدمات</a>
           <a href="#offers" className="hover:text-brand transition">العروض</a>
+          <a href="#products" className="hover:text-brand transition">المنتجات</a>
           <a href="#branches" className="hover:text-brand transition">الفروع</a>
           <a href="#about" className="hover:text-brand transition">من نحن</a>
           <a href="#contact" className="hover:text-brand transition">تواصل معنا</a>
