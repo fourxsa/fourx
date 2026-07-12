@@ -84,8 +84,8 @@ const services = [
 ];
 
 const offers = [
-  { price: "79", title: "4 علب زيت روك 5000", subtitle: "مع فلتر زيت + فحص مجاني", tag: "الأكثر طلباً", img: oilsImg },
-  { price: "109", title: "4 علب زيت روك 10000", subtitle: "مع فلتر زيت + فحص مجاني", tag: "عرض مميز", img: oilsImg },
+  { title: "4 علب زيت روك 5000", subtitle: "مع فلتر زيت + فحص مجاني", tag: "الأكثر طلباً", img: oilsImg },
+  { title: "4 علب زيت روك 10000", subtitle: "مع فلتر زيت + فحص مجاني", tag: "عرض مميز", img: oilsImg },
 ];
 
 const testimonials = [
