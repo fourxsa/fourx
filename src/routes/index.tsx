@@ -22,7 +22,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "فوراكس سيرفس - مركز متخصص في تغيير زيوت السيارات، الفلاتر، تلميع وعناية، وصيانة شاملة بأحدث الأجهزة وأسعار تنافسية. احجز فحصك المجاني اليوم.",
+          "فوراكس سيرفس - مركز متخصص في تغيير زيوت السيارات، الفلاتر، تلميع وعناية، وصيانة شاملة بأحدث الأجهزة. احجز فحصك المجاني اليوم.",
       },
       {
         name: "keywords",
@@ -66,7 +66,6 @@ export const Route = createFileRoute("/")({
           address: { "@type": "PostalAddress", addressCountry: "SA", addressRegion: "الرياض" },
           telephone: "+966500000000",
           openingHours: "Sa-Th 08:00-23:00",
-          priceRange: "$$",
           aggregateRating: { "@type": "AggregateRating", ratingValue: "4.9", reviewCount: "250" },
         }),
       },
@@ -84,8 +83,8 @@ const services = [
 ];
 
 const offers = [
-  { price: "79", title: "4 علب زيت روك 5000", subtitle: "مع فلتر زيت + فحص مجاني", tag: "الأكثر طلباً", img: oilsImg },
-  { price: "109", title: "4 علب زيت روك 10000", subtitle: "مع فلتر زيت + فحص مجاني", tag: "عرض مميز", img: oilsImg },
+  { title: "4 علب زيت روك 5000", subtitle: "مع فلتر زيت + فحص مجاني", tag: "الأكثر طلباً", img: oilsImg },
+  { title: "4 علب زيت روك 10000", subtitle: "مع فلتر زيت + فحص مجاني", tag: "عرض مميز", img: oilsImg },
 ];
 
 const testimonials = [
@@ -164,7 +163,7 @@ function Hero() {
             <span className="bg-gradient-primary bg-clip-text text-transparent">خدمة استثنائية</span>
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed">
-            زيوت أصلية، أجهزة فحص متطورة، وفريق فني معتمد. نعتني بسيارتك كأنها سيارتنا — بسرعة، احترافية، وأسعار تنافسية.
+            زيوت أصلية، أجهزة فحص متطورة، وفريق فني معتمد. نعتني بسيارتك كأنها سيارتنا — بسرعة واحترافية.
           </p>
           <div className="flex flex-wrap gap-4">
             <a href="#offers" className="group inline-flex items-center gap-3 bg-gradient-primary text-primary-foreground font-bold px-8 py-4 rounded-xl shadow-glow hover:scale-105 transition-transform">
@@ -213,7 +212,7 @@ function Hero() {
 }
 
 function Marquee() {
-  const items = ["زيوت أصلية", "فحص مجاني", "قطع معتمدة", "فنيون خبراء", "أسعار تنافسية", "خدمة سريعة"];
+  const items = ["زيوت أصلية", "فحص مجاني", "قطع معتمدة", "فنيون خبراء", "خدمة سريعة"];
   return (
     <div className="border-y border-border bg-surface overflow-hidden">
       <div className="flex gap-16 py-5 animate-[scroll_30s_linear_infinite] whitespace-nowrap">
@@ -333,7 +332,7 @@ function Products() {
                   rel="noopener"
                   className="mt-3 inline-flex items-center gap-2 text-sm font-bold text-brand hover:gap-3 transition-all"
                 >
-                  استفسر عن السعر
+                  استفسر عبر واتساب
                   <ArrowLeft className="w-4 h-4" />
                 </a>
               </div>
@@ -367,16 +366,10 @@ function Offers() {
                 <img src={o.img} alt={o.title} className="w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-700" width={1200} height={900} loading="lazy" />
               </div>
               <div className="p-8">
-                <div className="flex items-start justify-between gap-4 mb-6">
+                <div className="mb-6">
                   <div>
                     <h3 className="text-2xl md:text-3xl font-black leading-tight mb-2">{o.title}</h3>
                     <p className="text-muted-foreground">{o.subtitle}</p>
-                  </div>
-                  <div className="shrink-0 text-left">
-                    <div className="text-5xl md:text-6xl font-black bg-gradient-primary bg-clip-text text-transparent leading-none">
-                      {o.price}
-                    </div>
-                    <div className="text-xs text-muted-foreground mt-1">ريال سعودي</div>
                   </div>
                 </div>
                 <div className="space-y-2 mb-6">
@@ -432,7 +425,7 @@ function About() {
             فوراكس سيرفس مركز متخصص في خدمات السيارات، نقدم لك تجربة صيانة متكاملة من تغيير الزيوت والفلاتر إلى العناية والتلميع والصيانة الشاملة. نستخدم زيوت وقطع أصلية معتمدة، ويقودنا فريق من الفنيين الخبراء.
           </p>
           <ul className="grid sm:grid-cols-2 gap-3">
-            {["زيوت أصلية 100%", "ضمان على الخدمة", "أجهزة فحص متطورة", "أسعار تنافسية", "خدمة سريعة", "فنيون معتمدون"].map((f) => (
+            {["زيوت أصلية 100%", "ضمان على الخدمة", "أجهزة فحص متطورة", "خدمة سريعة", "فنيون معتمدون"].map((f) => (
               <li key={f} className="flex items-center gap-2 bg-surface border border-border rounded-lg px-4 py-3">
                 <CheckCircle2 className="w-5 h-5 text-brand shrink-0" />
                 <span className="font-medium">{f}</span>
