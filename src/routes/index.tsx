@@ -367,16 +367,10 @@ function Offers() {
                 <img src={o.img} alt={o.title} className="w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-700" width={1200} height={900} loading="lazy" />
               </div>
               <div className="p-8">
-                <div className="flex items-start justify-between gap-4 mb-6">
+                <div className="mb-6">
                   <div>
                     <h3 className="text-2xl md:text-3xl font-black leading-tight mb-2">{o.title}</h3>
                     <p className="text-muted-foreground">{o.subtitle}</p>
-                  </div>
-                  <div className="shrink-0 text-left">
-                    <div className="text-5xl md:text-6xl font-black bg-gradient-primary bg-clip-text text-transparent leading-none">
-                      {o.price}
-                    </div>
-                    <div className="text-xs text-muted-foreground mt-1">ريال سعودي</div>
                   </div>
                 </div>
                 <div className="space-y-2 mb-6">
