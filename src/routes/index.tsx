@@ -332,7 +332,7 @@ function Products() {
                   rel="noopener"
                   className="mt-3 inline-flex items-center gap-2 text-sm font-bold text-brand hover:gap-3 transition-all"
                 >
-                  استفسر عن السعر
+                  استفسر عبر واتساب
                   <ArrowLeft className="w-4 h-4" />
                 </a>
               </div>
