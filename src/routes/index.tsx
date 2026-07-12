@@ -101,6 +101,7 @@ function Index() {
       <Hero />
       <Marquee />
       <Services />
+      <Products />
       <Offers />
       <QuoteForm />
       <About />
