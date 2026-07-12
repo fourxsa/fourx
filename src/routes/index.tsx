@@ -163,7 +163,7 @@ function Hero() {
             <span className="bg-gradient-primary bg-clip-text text-transparent">خدمة استثنائية</span>
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed">
-            زيوت أصلية، أجهزة فحص متطورة، وفريق فني معتمد. نعتني بسيارتك كأنها سيارتنا — بسرعة، احترافية، وأسعار تنافسية.
+            زيوت أصلية، أجهزة فحص متطورة، وفريق فني معتمد. نعتني بسيارتك كأنها سيارتنا — بسرعة واحترافية.
           </p>
           <div className="flex flex-wrap gap-4">
             <a href="#offers" className="group inline-flex items-center gap-3 bg-gradient-primary text-primary-foreground font-bold px-8 py-4 rounded-xl shadow-glow hover:scale-105 transition-transform">
