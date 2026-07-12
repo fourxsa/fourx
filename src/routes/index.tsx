@@ -212,7 +212,7 @@ function Hero() {
 }
 
 function Marquee() {
-  const items = ["زيوت أصلية", "فحص مجاني", "قطع معتمدة", "فنيون خبراء", "أسعار تنافسية", "خدمة سريعة"];
+  const items = ["زيوت أصلية", "فحص مجاني", "قطع معتمدة", "فنيون خبراء", "خدمة سريعة"];
   return (
     <div className="border-y border-border bg-surface overflow-hidden">
       <div className="flex gap-16 py-5 animate-[scroll_30s_linear_infinite] whitespace-nowrap">
