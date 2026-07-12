@@ -9,6 +9,7 @@ import oilsImg from "@/assets/oils.jpg";
 import detailingImg from "@/assets/detailing.jpg";
 import serviceImg from "@/assets/service.jpg";
 import { branches } from "@/data/branches";
+import { products } from "@/data/products";
 
 const WHATSAPP_NUMBER = "966559527343";
 const WHATSAPP_DISPLAY = "+966 55 952 7343";
