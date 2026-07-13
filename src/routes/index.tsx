@@ -10,6 +10,37 @@ import detailingImg from "@/assets/detailing.jpg";
 import serviceImg from "@/assets/service.jpg";
 import { branches } from "@/data/branches";
 import { products } from "@/data/products";
+import branch1 from "@/assets/gallery/branch-1.jpg.asset.json";
+import branch2 from "@/assets/gallery/branch-2.jpg.asset.json";
+import branch3 from "@/assets/gallery/branch-3.jpg.asset.json";
+import branch4 from "@/assets/gallery/branch-4.jpg.asset.json";
+import branch5 from "@/assets/gallery/branch-5.jpg.asset.json";
+import gRocLineup from "@/assets/gallery/roc-lineup.jpg.asset.json";
+import gFreeServices from "@/assets/gallery/free-services.jpg.asset.json";
+import gPromo1 from "@/assets/gallery/promo-1.jpg.asset.json";
+import gPromo2 from "@/assets/gallery/promo-2.jpg.asset.json";
+import gTerms from "@/assets/gallery/terms.jpg.asset.json";
+import gInfo1 from "@/assets/gallery/info-1.jpg.asset.json";
+import gInfo2 from "@/assets/gallery/info-2.jpg.asset.json";
+import gInfo3 from "@/assets/gallery/info-3.jpg.asset.json";
+import gInfo4 from "@/assets/gallery/info-4.jpg.asset.json";
+
+const GALLERY = [
+  { src: gRocLineup.url, caption: "زيوت ROC GZX الأصلية" },
+  { src: gPromo1.url, caption: "عرض خاص - 4 علب زيت روك 5000" },
+  { src: gPromo2.url, caption: "عرض خاص - 4 علب زيت روك 10000" },
+  { src: gFreeServices.url, caption: "الخدمات المجانية" },
+  { src: gInfo1.url, caption: "معلومات فوراكس سيرفس" },
+  { src: gInfo2.url, caption: "معلومات فوراكس سيرفس" },
+  { src: gInfo3.url, caption: "معلومات فوراكس سيرفس" },
+  { src: gInfo4.url, caption: "معلومات فوراكس سيرفس" },
+  { src: gTerms.url, caption: "الشروط والأحكام" },
+  { src: branch1.url, caption: "من داخل الفرع" },
+  { src: branch2.url, caption: "من داخل الفرع" },
+  { src: branch3.url, caption: "من داخل الفرع" },
+  { src: branch4.url, caption: "من داخل الفرع" },
+  { src: branch5.url, caption: "من داخل الفرع" },
+];
 
 const WHATSAPP_NUMBER = "966559527343";
 const WHATSAPP_DISPLAY = "+966 55 952 7343";
@@ -105,6 +136,7 @@ function Index() {
       <QuoteForm />
       <About />
       <Branches />
+      <Gallery />
       <Testimonials />
       <CTA />
       <Footer />
@@ -129,6 +161,7 @@ function Nav() {
           <a href="#services" className="hover:text-brand transition">الخدمات</a>
           <a href="#offers" className="hover:text-brand transition">العروض</a>
           <a href="#products" className="hover:text-brand transition">المنتجات</a>
+          <a href="#gallery" className="hover:text-brand transition">معرض الصور</a>
           <a href="#branches" className="hover:text-brand transition">الفروع</a>
           <a href="#about" className="hover:text-brand transition">من نحن</a>
           <a href="#contact" className="hover:text-brand transition">تواصل معنا</a>
@@ -545,6 +578,30 @@ function SocialIcons({ className = "" }: { className?: string }) {
         </a>
       ))}
     </div>
+  );
+}
+
+function Gallery() {
+  return (
+    <section id="gallery" className="py-24 md:py-32 bg-surface relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-5 lg:px-10">
+        <div className="text-center mb-14">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-brand/10 text-brand text-xs font-bold tracking-widest mb-4">معرض الصور</span>
+          <h2 className="text-4xl md:text-6xl font-black mb-4">لحظات من <span className="text-brand">فوراكس سيرفس</span></h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">عروضنا الحصرية، خدماتنا المجانية، ومنتجاتنا الأصلية — كل ما تحتاج معرفته في صور.</p>
+        </div>
+        <div className="columns-2 md:columns-3 lg:columns-4 gap-4 [column-fill:_balance]">
+          {GALLERY.map((g, i) => (
+            <figure key={i} className="mb-4 break-inside-avoid rounded-2xl overflow-hidden border border-border bg-background group relative">
+              <img src={g.src} alt={g.caption} loading="lazy" className="w-full h-auto block transition-transform duration-500 group-hover:scale-[1.03]" />
+              <figcaption className="absolute inset-x-0 bottom-0 p-3 text-xs font-medium text-white bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition">
+                {g.caption}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
