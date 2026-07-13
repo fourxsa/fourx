@@ -136,6 +136,7 @@ function Index() {
       <QuoteForm />
       <About />
       <Branches />
+      <Gallery />
       <Testimonials />
       <CTA />
       <Footer />
