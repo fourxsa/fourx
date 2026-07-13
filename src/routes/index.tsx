@@ -10,6 +10,37 @@ import detailingImg from "@/assets/detailing.jpg";
 import serviceImg from "@/assets/service.jpg";
 import { branches } from "@/data/branches";
 import { products } from "@/data/products";
+import branch1 from "@/assets/gallery/branch-1.jpg.asset.json";
+import branch2 from "@/assets/gallery/branch-2.jpg.asset.json";
+import branch3 from "@/assets/gallery/branch-3.jpg.asset.json";
+import branch4 from "@/assets/gallery/branch-4.jpg.asset.json";
+import branch5 from "@/assets/gallery/branch-5.jpg.asset.json";
+import gRocLineup from "@/assets/gallery/roc-lineup.jpg.asset.json";
+import gFreeServices from "@/assets/gallery/free-services.jpg.asset.json";
+import gPromo1 from "@/assets/gallery/promo-1.jpg.asset.json";
+import gPromo2 from "@/assets/gallery/promo-2.jpg.asset.json";
+import gTerms from "@/assets/gallery/terms.jpg.asset.json";
+import gInfo1 from "@/assets/gallery/info-1.jpg.asset.json";
+import gInfo2 from "@/assets/gallery/info-2.jpg.asset.json";
+import gInfo3 from "@/assets/gallery/info-3.jpg.asset.json";
+import gInfo4 from "@/assets/gallery/info-4.jpg.asset.json";
+
+const GALLERY = [
+  { src: gRocLineup.url, caption: "زيوت ROC GZX الأصلية" },
+  { src: gPromo1.url, caption: "عرض خاص - 4 علب زيت روك 5000" },
+  { src: gPromo2.url, caption: "عرض خاص - 4 علب زيت روك 10000" },
+  { src: gFreeServices.url, caption: "الخدمات المجانية" },
+  { src: gInfo1.url, caption: "معلومات فوراكس سيرفس" },
+  { src: gInfo2.url, caption: "معلومات فوراكس سيرفس" },
+  { src: gInfo3.url, caption: "معلومات فوراكس سيرفس" },
+  { src: gInfo4.url, caption: "معلومات فوراكس سيرفس" },
+  { src: gTerms.url, caption: "الشروط والأحكام" },
+  { src: branch1.url, caption: "من داخل الفرع" },
+  { src: branch2.url, caption: "من داخل الفرع" },
+  { src: branch3.url, caption: "من داخل الفرع" },
+  { src: branch4.url, caption: "من داخل الفرع" },
+  { src: branch5.url, caption: "من داخل الفرع" },
+];
 
 const WHATSAPP_NUMBER = "966559527343";
 const WHATSAPP_DISPLAY = "+966 55 952 7343";
