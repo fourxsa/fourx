@@ -160,6 +160,7 @@ function Nav() {
           <a href="#services" className="hover:text-brand transition">الخدمات</a>
           <a href="#offers" className="hover:text-brand transition">العروض</a>
           <a href="#products" className="hover:text-brand transition">المنتجات</a>
+          <a href="#gallery" className="hover:text-brand transition">معرض الصور</a>
           <a href="#branches" className="hover:text-brand transition">الفروع</a>
           <a href="#about" className="hover:text-brand transition">من نحن</a>
           <a href="#contact" className="hover:text-brand transition">تواصل معنا</a>
