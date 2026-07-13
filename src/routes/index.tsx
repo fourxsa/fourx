@@ -581,6 +581,30 @@ function SocialIcons({ className = "" }: { className?: string }) {
   );
 }
 
+function Gallery() {
+  return (
+    <section id="gallery" className="py-24 md:py-32 bg-surface relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-5 lg:px-10">
+        <div className="text-center mb-14">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-brand/10 text-brand text-xs font-bold tracking-widest mb-4">معرض الصور</span>
+          <h2 className="text-4xl md:text-6xl font-black mb-4">لحظات من <span className="text-brand">فوراكس سيرفس</span></h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">عروضنا الحصرية، خدماتنا المجانية، ومنتجاتنا الأصلية — كل ما تحتاج معرفته في صور.</p>
+        </div>
+        <div className="columns-2 md:columns-3 lg:columns-4 gap-4 [column-fill:_balance]">
+          {GALLERY.map((g, i) => (
+            <figure key={i} className="mb-4 break-inside-avoid rounded-2xl overflow-hidden border border-border bg-background group relative">
+              <img src={g.src} alt={g.caption} loading="lazy" className="w-full h-auto block transition-transform duration-500 group-hover:scale-[1.03]" />
+              <figcaption className="absolute inset-x-0 bottom-0 p-3 text-xs font-medium text-white bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition">
+                {g.caption}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Footer() {
   return (
     <footer className="border-t border-border bg-surface py-12">
