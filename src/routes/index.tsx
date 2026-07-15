@@ -521,7 +521,12 @@ function CTA() {
                   <Phone className="w-5 h-5" />
                   اتصل الآن
                 </a>
-                <a href="#" className="inline-flex items-center gap-2 border border-border bg-surface/60 backdrop-blur px-8 py-4 rounded-xl font-bold hover:bg-surface transition">
+                <a
+                  href="https://www.google.com/maps/place/24%C2%B048'12.4%22N+46%C2%B048'10.5%22E/@24.8034335,46.8051005,17z/data=!3m1!4b1!4m4!3m3!8m2!3d24.8034335!4d46.8029118?hl=ar&entry=ttu&g_ep=EgoyMDI2MDcxMi4wIKXMDSoASAFQAw%3D%3D"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 border border-border bg-surface/60 backdrop-blur px-8 py-4 rounded-xl font-bold hover:bg-surface transition"
+                >
                   <MapPin className="w-5 h-5" />
                   موقعنا على الخريطة
                 </a>
@@ -529,8 +534,8 @@ function CTA() {
             </div>
             <div className="space-y-4">
               {[
-                { icon: Phone, label: "اتصل بنا", value: "+966 55 952 7343" },
-                { icon: MapPin, label: "الموقع", value: "الرياض، المملكة العربية السعودية" },
+                { icon: Phone, label: "اتصل بنا", value: "+966 55 952 7343", href: "tel:+966559527343" },
+                { icon: MapPin, label: "الموقع", value: "الرياض - الربوة، المملكة العربية السعودية", href: "https://www.google.com/maps/place/24%C2%B048'12.4%22N+46%C2%B048'10.5%22E/@24.8034335,46.8051005,17z/data=!3m1!4b1!4m4!3m3!8m2!3d24.8034335!4d46.8029118?hl=ar&entry=ttu&g_ep=EgoyMDI2MDcxMi4wIKXMDSoASAFQAw%3D%3D" },
                 { icon: Clock, label: "ساعات العمل", value: "السبت - الخميس: 8 ص - 11 م" },
               ].map((c) => (
                 <div key={c.label} className="flex items-center gap-4 bg-background/60 backdrop-blur border border-border rounded-xl p-5">
@@ -539,7 +544,13 @@ function CTA() {
                   </div>
                   <div>
                     <div className="text-xs text-muted-foreground">{c.label}</div>
-                    <div className="font-bold">{c.value}</div>
+                    {c.href ? (
+                      <a href={c.href} target={c.href.startsWith("http") ? "_blank" : undefined} rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined} className="font-bold hover:text-brand transition">
+                        {c.value}
+                      </a>
+                    ) : (
+                      <div className="font-bold">{c.value}</div>
+                    )}
                   </div>
                 </div>
               ))}
