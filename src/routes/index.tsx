@@ -291,12 +291,12 @@ function Services() {
 }
 
 function Products() {
-  const [filter, setFilter] = useState<"الكل" | "محرك" | "ناقل حركة">("الكل");
+  const [filter, setFilter] = useState<"الكل" | "بنزين" | "ديزل" | "ناقل حركة">("الكل");
   const filtered = useMemo(
     () => (filter === "الكل" ? products : products.filter((p) => p.category === filter)),
     [filter],
   );
-  const cats: Array<"الكل" | "محرك" | "ناقل حركة"> = ["الكل", "محرك", "ناقل حركة"];
+  const cats: Array<"الكل" | "بنزين" | "ديزل" | "ناقل حركة"> = ["الكل", "بنزين", "ديزل", "ناقل حركة"];
 
   return (
     <section id="products" className="py-24 md:py-32 relative overflow-hidden">
