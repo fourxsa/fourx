@@ -132,6 +132,7 @@ function Index() {
       <Marquee />
       <Services />
       <Products />
+      <OilCatalog />
       <Offers />
       <QuoteForm />
       <About />
@@ -161,6 +162,7 @@ function Nav() {
           <a href="#services" className="hover:text-brand transition">الخدمات</a>
           <a href="#offers" className="hover:text-brand transition">العروض</a>
           <a href="#products" className="hover:text-brand transition">المنتجات</a>
+          <a href="#oil-catalog" className="hover:text-brand transition">أنواع الزيوت</a>
           <a href="#gallery" className="hover:text-brand transition">معرض الصور</a>
           <a href="#branches" className="hover:text-brand transition">الفروع</a>
           <a href="#about" className="hover:text-brand transition">من نحن</a>
@@ -291,12 +293,12 @@ function Services() {
 }
 
 function Products() {
-  const [filter, setFilter] = useState<"الكل" | "محرك" | "ناقل حركة">("الكل");
+  const [filter, setFilter] = useState<"الكل" | "بنزين" | "ديزل" | "ناقل حركة">("الكل");
   const filtered = useMemo(
     () => (filter === "الكل" ? products : products.filter((p) => p.category === filter)),
     [filter],
   );
-  const cats: Array<"الكل" | "محرك" | "ناقل حركة"> = ["الكل", "محرك", "ناقل حركة"];
+  const cats: Array<"الكل" | "بنزين" | "ديزل" | "ناقل حركة"> = ["الكل", "بنزين", "ديزل", "ناقل حركة"];
 
   return (
     <section id="products" className="py-24 md:py-32 relative overflow-hidden">
@@ -371,6 +373,92 @@ function Products() {
               </div>
             </div>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function OilCatalog() {
+  const groups: Array<{ key: "بنزين" | "ديزل" | "ناقل حركة"; title: string; subtitle: string }> = [
+    { key: "بنزين", title: "زيوت محركات البنزين", subtitle: "Gasoline Engine Oils" },
+    { key: "ديزل", title: "زيوت محركات الديزل", subtitle: "Diesel Engine Oils" },
+    { key: "ناقل حركة", title: "زيوت ناقل الحركة - القير", subtitle: "Transmission Fluids" },
+  ];
+
+  return (
+    <section id="oil-catalog" className="py-24 md:py-32 bg-surface relative overflow-hidden">
+      <div className="absolute inset-0 diagonal-stripe opacity-30" />
+      <div className="relative max-w-7xl mx-auto px-5 lg:px-10">
+        <div className="text-center mb-16 max-w-3xl mx-auto">
+          <div className="text-brand font-bold text-sm tracking-widest mb-3">كتالوج الزيوت</div>
+          <h2 className="text-4xl md:text-6xl font-black leading-tight">
+            أنواع <span className="text-brand">الزيوت</span> ومواصفاتها
+          </h2>
+          <p className="text-muted-foreground mt-4 text-lg">
+            جميع منتجات <b>روك</b> مصنعة من زيوت بكر 100% من أرامكو بتقنية أمريكية لضمان الجودة والاعتمادية في أصعب الظروف المناخية.
+          </p>
+        </div>
+
+        <div className="space-y-16">
+          {groups.map((g) => {
+            const items = products.filter((p) => p.category === g.key);
+            return (
+              <div key={g.key}>
+                <div className="flex items-end justify-between gap-4 mb-6 border-b border-border pb-4">
+                  <div>
+                    <h3 className="text-2xl md:text-3xl font-black">{g.title}</h3>
+                    <div className="text-xs md:text-sm text-muted-foreground tracking-widest mt-1 font-mono">
+                      {g.subtitle}
+                    </div>
+                  </div>
+                  <div className="text-xs text-brand font-black bg-primary/10 border border-primary/30 px-3 py-1.5 rounded-full">
+                    {items.length} منتجات
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-5">
+                  {items.map((p) => (
+                    <article
+                      key={p.id}
+                      className="group flex gap-4 bg-background border border-border rounded-2xl p-5 hover:border-primary/60 transition shadow-card"
+                    >
+                      <div className={`shrink-0 w-24 md:w-28 h-32 md:h-36 rounded-xl bg-gradient-to-br ${p.accent} flex items-center justify-center overflow-hidden`}>
+                        <img
+                          src={p.image}
+                          alt={`${p.name} ${p.grade}`}
+                          className="h-full w-auto object-contain drop-shadow-xl group-hover:scale-110 transition-transform duration-500"
+                          loading="lazy"
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0 space-y-2">
+                        <div className="flex items-center justify-between gap-2">
+                          <h4 className="text-base md:text-lg font-black leading-tight truncate">
+                            {p.name} <span className="text-brand">{p.grade}</span>
+                          </h4>
+                        </div>
+                        <div className="text-[11px] md:text-xs text-muted-foreground font-mono bg-surface border border-border rounded-md px-2 py-1 inline-block">
+                          {p.spec}
+                        </div>
+                        <div className="space-y-1.5 text-sm">
+                          <div className="flex gap-2">
+                            <CheckCircle2 className="w-4 h-4 text-brand shrink-0 mt-0.5" />
+                            <p className="text-muted-foreground leading-relaxed">{p.features}</p>
+                          </div>
+                          <div className="flex gap-2">
+                            <Gauge className="w-4 h-4 text-brand shrink-0 mt-0.5" />
+                            <p className="text-muted-foreground leading-relaxed">
+                              <b className="text-foreground">الاستخدام: </b>{p.usage}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
