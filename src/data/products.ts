@@ -1,13 +1,13 @@
-import gzx0w20 from "@/assets/products/gzx-0w20.png.asset.json";
-import gzx5w20 from "@/assets/products/gzx-5w20.png.asset.json";
-import gzx5w30 from "@/assets/products/gzx-5w30.png.asset.json";
-import gzx10w30 from "@/assets/products/gzx-10w30.png.asset.json";
-import gzx20w50 from "@/assets/products/gzx-20w50.png.asset.json";
-import gzxAtfDex6 from "@/assets/products/gzx-atf-dex6.png.asset.json";
-import gzxCvt from "@/assets/products/gzx-cvt.png.asset.json";
-import rocAtfDex3 from "@/assets/products/roc-atf-dex3.png.asset.json";
-import rocDiesel5L from "@/assets/products/roc-super-diesel-5l.jpg.asset.json";
-import rocDiesel4L from "@/assets/products/roc-super-diesel-4l.jpg.asset.json";
+import gzx0w20 from "@/assets/products/gzx-0w20.png";
+import gzx5w20 from "@/assets/products/gzx-5w20.png";
+import gzx5w30 from "@/assets/products/gzx-5w30.png";
+import gzx10w30 from "@/assets/products/gzx-10w30.png";
+import gzx20w50 from "@/assets/products/gzx-20w50.png";
+import gzxAtfDex6 from "@/assets/products/gzx-atf-dex6.png";
+import gzxCvt from "@/assets/products/gzx-cvt.png";
+import rocAtfDex3 from "@/assets/products/roc-atf-dex3.png";
+import rocDiesel5L from "@/assets/products/roc-super-diesel-5l.jpg";
+import rocDiesel4L from "@/assets/products/roc-super-diesel-4l.jpg";
 export type ProductCategory = "بنزين" | "ديزل" | "ناقل حركة";
 
 export type Product = {
