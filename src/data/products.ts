@@ -1,13 +1,13 @@
-import gzx0w20 from "@/assets/products/gzx-0w20.png.asset.json";
-import gzx5w20 from "@/assets/products/gzx-5w20.png.asset.json";
-import gzx5w30 from "@/assets/products/gzx-5w30.png.asset.json";
-import gzx10w30 from "@/assets/products/gzx-10w30.png.asset.json";
-import gzx20w50 from "@/assets/products/gzx-20w50.png.asset.json";
-import gzxAtfDex6 from "@/assets/products/gzx-atf-dex6.png.asset.json";
-import gzxCvt from "@/assets/products/gzx-cvt.png.asset.json";
-import rocAtfDex3 from "@/assets/products/roc-atf-dex3.png.asset.json";
-import rocDiesel5L from "@/assets/products/roc-super-diesel-5l.jpg.asset.json";
-import rocDiesel4L from "@/assets/products/roc-super-diesel-4l.jpg.asset.json";
+import gzx0w20 from "@/assets/products/gzx-0w20.png";
+import gzx5w20 from "@/assets/products/gzx-5w20.png";
+import gzx5w30 from "@/assets/products/gzx-5w30.png";
+import gzx10w30 from "@/assets/products/gzx-10w30.png";
+import gzx20w50 from "@/assets/products/gzx-20w50.png";
+import gzxAtfDex6 from "@/assets/products/gzx-atf-dex6.png";
+import gzxCvt from "@/assets/products/gzx-cvt.png";
+import rocAtfDex3 from "@/assets/products/roc-atf-dex3.png";
+import rocDiesel5L from "@/assets/products/roc-super-diesel-5l.jpg";
+import rocDiesel4L from "@/assets/products/roc-super-diesel-4l.jpg";
 export type ProductCategory = "بنزين" | "ديزل" | "ناقل حركة";
 
 export type Product = {
@@ -34,7 +34,7 @@ export const products: Product[] = [
     desc: "زيت محرك تخليقي بالكامل بتقنية أمريكية للسيارات الحديثة والهجينة.",
     features: "زيت تخليقي بالكامل (Fully Synthetic) يوفر حماية قصوى عند التشغيل البارد وتقليل استهلاك الوقود.",
     usage: "السيارات الحديثة والهجينة (Hybrid) التي تتطلب لزوجة منخفضة جداً.",
-    image: gzx0w20.url,
+    image: gzx0w20,
     accent: "from-amber-500 to-yellow-600",
     badge: "الأعلى جودة",
   },
@@ -47,7 +47,7 @@ export const products: Product[] = [
     desc: "تخليقي بالكامل، لزوجة منخفضة تقلل الاحتكاك وترفع استجابة المحرك.",
     features: "زيت تخليقي بالكامل بلزوجة منخفضة لتقليل الاحتكاك الداخلي للمحرك وزيادة استجابته.",
     usage: "السيارات الأمريكية والكورية الحديثة لرفع كفاءة استهلاك الوقود.",
-    image: gzx5w20.url,
+    image: gzx5w20,
     accent: "from-zinc-400 to-zinc-600",
   },
   {
@@ -59,7 +59,7 @@ export const products: Product[] = [
     desc: "التوازن المثالي بين الحماية والأداء لمعظم السيارات الحديثة.",
     features: "توازن مثالي بين الحماية والأداء، يتحمل درجات الحرارة العالية ويحافظ على نظافة المحرك.",
     usage: "الخيار الأكثر شيوعاً لمعظم السيارات الحديثة (تويوتا، هيونداي، كيا، نيسان).",
-    image: gzx5w30.url,
+    image: gzx5w30,
     accent: "from-slate-400 to-slate-600",
     badge: "الأكثر طلباً",
   },
@@ -72,7 +72,7 @@ export const products: Product[] = [
     desc: "نصف تخليقي عالي الجودة لظروف القيادة الشاقة والحرارة المرتفعة.",
     features: "زيت نصف تخليقي عالي الجودة، يوفر حماية ممتازة في ظروف القيادة الشاقة والحرارة المرتفعة.",
     usage: "المحركات التي قطعت مسافات متوسطة وسيارات الدفع الرباعي.",
-    image: gzx10w30.url,
+    image: gzx10w30,
     accent: "from-yellow-500 to-amber-600",
   },
   {
@@ -84,7 +84,7 @@ export const products: Product[] = [
     desc: "لزوجة عالية لحماية قصوى للمحركات الأعلى كيلومترات.",
     features: "زيت بلزوجة عالية يوفر طبقة حماية سميكة تقلل من تآكل الأجزاء الداخلية في المحركات القديمة.",
     usage: "المحركات التي تعمل في درجات حرارة شديدة أو المحركات ذات العمر الطويل.",
-    image: gzx20w50.url,
+    image: gzx20w50,
     accent: "from-red-500 to-rose-700",
   },
   {
@@ -96,7 +96,7 @@ export const products: Product[] = [
     desc: "زيت ديزل عالي الأداء لتنظيف الكربون ومعادلة الأحماض.",
     features: "قدرة عالية على تنظيف الكربون ومعادلة الأحماض الناتجة عن احتراق الديزل.",
     usage: "الشاحنات، الحافلات، المولدات، والمعدات الإنشائية ذات محركات الديزل.",
-    image: rocDiesel5L.url,
+    image: rocDiesel5L,
     accent: "from-blue-600 to-blue-900",
   },
   {
@@ -108,7 +108,7 @@ export const products: Product[] = [
     desc: "لزوجة ثابتة لحماية شواحن التيربو في الأجواء الحارة.",
     features: "لزوجة ثابتة تحت درجات الحرارة العالية جداً لحماية شواحن التيربو.",
     usage: "شاحنات النقل الثقيل والمحركات القديمة التي تعمل في الأجواء الحارة.",
-    image: rocDiesel4L.url,
+    image: rocDiesel4L,
     accent: "from-sky-600 to-blue-800",
   },
   {
@@ -120,7 +120,7 @@ export const products: Product[] = [
     desc: "ثبات قص ممتاز ومقاومة رغوة لناقل الحركة المتغير باستمرار.",
     features: "يمنع الانزلاق ويوفر حماية مثالية للسير المعدني داخل ناقل الحركة.",
     usage: "فقط لسيارات نظام CVT (مثل نيسان، هوندا، وتويوتا الحديثة).",
-    image: gzxCvt.url,
+    image: gzxCvt,
     accent: "from-red-400 to-rose-600",
   },
   {
@@ -132,7 +132,7 @@ export const products: Product[] = [
     desc: "تخليقي منخفض اللزوجة لتبديلات ناعمة وتقليل حرارة القير.",
     features: "زيت تخليقي منخفض اللزوجة؛ يوفر تبديلات ناعمة جداً ويقلل حرارة القير.",
     usage: "نواقل الحركة الأوتوماتيكية الحديثة (6 سرعات فأكثر) والسيارات الأوروبية.",
-    image: gzxAtfDex6.url,
+    image: gzxAtfDex6,
     accent: "from-red-500 to-red-700",
   },
   {
@@ -144,7 +144,7 @@ export const products: Product[] = [
     desc: "مقاومة عالية للأكسدة وحماية فائقة تحت الضغط العالي.",
     features: "مقاومة عالية للأكسدة وحماية فائقة من التآكل تحت الضغط العالي.",
     usage: "نواقل الحركة القديمة وأنظمة الدركسون (Power Steering) للهيدروليك.",
-    image: rocAtfDex3.url,
+    image: rocAtfDex3,
     accent: "from-red-600 to-red-800",
   },
 ];
