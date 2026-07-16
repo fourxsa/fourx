@@ -3,44 +3,45 @@ import { Phone, MapPin, Clock, Droplet, SprayCan, Wrench, ShieldCheck, Sparkles,
 import { useState, useMemo } from "react";
 import { z } from "zod";
 import { toast, Toaster } from "sonner";
-import logoAsset from "@/assets/logo.png.asset.json";
+import logoAsset from "@/assets/logo.png";
 import heroImg from "@/assets/hero.jpg";
 import oilsImg from "@/assets/oils.jpg";
 import detailingImg from "@/assets/detailing.jpg";
 import serviceImg from "@/assets/service.jpg";
 import { branches } from "@/data/branches";
 import { products } from "@/data/products";
-import branch1 from "@/assets/gallery/branch-1.jpg.asset.json";
-import branch2 from "@/assets/gallery/branch-2.jpg.asset.json";
-import branch3 from "@/assets/gallery/branch-3.jpg.asset.json";
-import branch4 from "@/assets/gallery/branch-4.jpg.asset.json";
-import branch5 from "@/assets/gallery/branch-5.jpg.asset.json";
-import gRocLineup from "@/assets/gallery/roc-lineup.jpg.asset.json";
-import gFreeServices from "@/assets/gallery/free-services.jpg.asset.json";
-import gPromo1 from "@/assets/gallery/promo-1.jpg.asset.json";
-import gPromo2 from "@/assets/gallery/promo-2.jpg.asset.json";
-import gTerms from "@/assets/gallery/terms.jpg.asset.json";
-import gInfo1 from "@/assets/gallery/info-1.jpg.asset.json";
-import gInfo2 from "@/assets/gallery/info-2.jpg.asset.json";
-import gInfo3 from "@/assets/gallery/info-3.jpg.asset.json";
-import gInfo4 from "@/assets/gallery/info-4.jpg.asset.json";
+import branch1 from "@/assets/gallery/branch-1.jpg";
+import branch2 from "@/assets/gallery/branch-2.jpg";
+import branch3 from "@/assets/gallery/branch-3.jpg";
+import branch4 from "@/assets/gallery/branch-4.jpg";
+import branch5 from "@/assets/gallery/branch-5.jpg";
+import gRocLineup from "@/assets/gallery/roc-lineup.jpg";
+import gFreeServices from "@/assets/gallery/free-services.jpg";
+import gPromo1 from "@/assets/gallery/promo-1.jpg";
+import gPromo2 from "@/assets/gallery/promo-2.jpg";
+import gTerms from "@/assets/gallery/terms.jpg";
+import gInfo1 from "@/assets/gallery/info-1.jpg";
+import gInfo2 from "@/assets/gallery/info-2.jpg";
+import gInfo3 from "@/assets/gallery/info-3.jpg";
+import gInfo4 from "@/assets/gallery/info-4.jpg";
 
 const GALLERY = [
-  { src: gRocLineup.url, caption: "زيوت ROC GZX الأصلية" },
-  { src: gPromo1.url, caption: "عرض خاص - 4 علب زيت روك 5000" },
-  { src: gPromo2.url, caption: "عرض خاص - 4 علب زيت روك 10000" },
-  { src: gFreeServices.url, caption: "الخدمات المجانية" },
-  { src: gInfo1.url, caption: "معلومات فوراكس سيرفس" },
-  { src: gInfo2.url, caption: "معلومات فوراكس سيرفس" },
-  { src: gInfo3.url, caption: "معلومات فوراكس سيرفس" },
-  { src: gInfo4.url, caption: "معلومات فوراكس سيرفس" },
-  { src: gTerms.url, caption: "الشروط والأحكام" },
-  { src: branch1.url, caption: "من داخل الفرع" },
-  { src: branch2.url, caption: "من داخل الفرع" },
-  { src: branch3.url, caption: "من داخل الفرع" },
-  { src: branch4.url, caption: "من داخل الفرع" },
-  { src: branch5.url, caption: "من داخل الفرع" },
+  { src: gRocLineup, caption: "زيوت ROC GZX الأصلية" },
+  { src: gPromo1, caption: "عرض خاص - 4 علب زيت روك 5000" },
+  { src: gPromo2, caption: "عرض خاص - 4 علب زيت روك 10000" },
+  { src: gFreeServices, caption: "الخدمات المجانية" },
+  { src: gInfo1, caption: "معلومات فوراكس سيرفس" },
+  { src: gInfo2, caption: "معلومات فوراكس سيرفس" },
+  { src: gInfo3, caption: "معلومات فوراكس سيرفس" },
+  { src: gInfo4, caption: "معلومات فوراكس سيرفس" },
+  { src: gTerms, caption: "الشروط والأحكام" },
+  { src: branch1, caption: "من داخل الفرع" },
+  { src: branch2, caption: "من داخل الفرع" },
+  { src: branch3, caption: "من داخل الفرع" },
+  { src: branch4, caption: "من داخل الفرع" },
+  { src: branch5, caption: "من داخل الفرع" },
 ];
+
 
 const WHATSAPP_NUMBER = "966559527343";
 const WHATSAPP_DISPLAY = "+966 55 952 7343";
@@ -152,7 +153,7 @@ function Nav() {
     <header className="sticky top-0 z-50 backdrop-blur-lg bg-background/80 border-b border-border">
       <div className="max-w-7xl mx-auto px-5 lg:px-10 h-20 flex items-center justify-between">
         <a href="#home" className="flex items-center gap-3">
-          <img src={logoAsset.url} alt="4X Service" className="h-12 w-12" />
+          <img src={logoAsset} alt="4X Service" className="h-12 w-12" />
           <div className="flex flex-col leading-tight">
             <span className="text-lg font-black tracking-tight">فوراكس سيرفس</span>
             <span className="text-[11px] text-muted-foreground tracking-widest">4X SERVICE</span>
@@ -710,7 +711,7 @@ function Footer() {
       <div className="max-w-7xl mx-auto px-5 lg:px-10 flex flex-col gap-8">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
-            <img src={logoAsset.url} alt="4X Service" className="h-10 w-10" />
+            <img src={logoAsset} alt="4X Service" className="h-10 w-10" />
             <div>
               <div className="font-black">فوراكس سيرفس</div>
               <div className="text-xs text-muted-foreground">© {new Date().getFullYear()} جميع الحقوق محفوظة</div>
