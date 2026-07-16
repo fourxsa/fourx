@@ -153,7 +153,7 @@ function Nav() {
     <header className="sticky top-0 z-50 backdrop-blur-lg bg-background/80 border-b border-border">
       <div className="max-w-7xl mx-auto px-5 lg:px-10 h-20 flex items-center justify-between">
         <a href="#home" className="flex items-center gap-3">
-          <img src={logoAsset.url} alt="4X Service" className="h-12 w-12" />
+          <img src={logoAsset} alt="4X Service" className="h-12 w-12" />
           <div className="flex flex-col leading-tight">
             <span className="text-lg font-black tracking-tight">فوراكس سيرفس</span>
             <span className="text-[11px] text-muted-foreground tracking-widest">4X SERVICE</span>
@@ -711,7 +711,7 @@ function Footer() {
       <div className="max-w-7xl mx-auto px-5 lg:px-10 flex flex-col gap-8">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
-            <img src={logoAsset.url} alt="4X Service" className="h-10 w-10" />
+            <img src={logoAsset} alt="4X Service" className="h-10 w-10" />
             <div>
               <div className="font-black">فوراكس سيرفس</div>
               <div className="text-xs text-muted-foreground">© {new Date().getFullYear()} جميع الحقوق محفوظة</div>
