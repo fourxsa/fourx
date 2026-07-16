@@ -1,0 +1,25 @@
+{
+  "name": "4X Service - فوراكس سيرفس",
+  "short_name": "4X Service",
+  "description": "مركز متخصص في تغيير الزيوت، العناية، التلميع، وصيانة السيارات الشاملة.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d1b2a",
+  "theme_color": "#0d1b2a",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

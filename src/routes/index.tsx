@@ -74,6 +74,10 @@ export const Route = createFileRoute("/")({
       { property: "og:url", content: "/" },
       { property: "og:locale", content: "ar_SA" },
       { property: "og:site_name", content: "4X Service" },
+      { property: "og:image", content: "https://fourx.lovable.app/og-image.png" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "شعار 4X Service - فوراكس سيرفس" },
 
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "فوراكس سيرفس | زيوت وعناية وصيانة السيارات" },
@@ -81,6 +85,7 @@ export const Route = createFileRoute("/")({
         name: "twitter:description",
         content: "زيوت أصلية، فحص مجاني، وعروض حصرية لصيانة سيارتك.",
       },
+      { name: "twitter:image", content: "https://fourx.lovable.app/og-image.png" },
 
       { name: "theme-color", content: "#0d1b2a" },
     ],
