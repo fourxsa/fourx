@@ -10,6 +10,7 @@ import rocLineupImg from "@/assets/roc-gzx-lineup.jpg";
 import detailingImg from "@/assets/detailing.jpg";
 import serviceImg from "@/assets/service.jpg";
 import { branches } from "@/data/branches";
+import { stations } from "@/data/stations";
 import { products } from "@/data/products";
 import branch1 from "@/assets/gallery/branch-1.jpg";
 import branch2 from "@/assets/gallery/branch-2.jpg";
@@ -178,6 +179,7 @@ function Nav() {
           <a href="#products" className="hover:text-brand transition">المنتجات</a>
           <a href="#oil-catalog" className="hover:text-brand transition">أنواع الزيوت</a>
           <a href="#gallery" className="hover:text-brand transition">معرض الصور</a>
+          <a href="#stations" className="hover:text-brand transition">المحطات</a>
           <a href="#branches" className="hover:text-brand transition">الفروع</a>
           <a href="#about" className="hover:text-brand transition">من نحن</a>
           <a href="#contact" className="hover:text-brand transition">تواصل معنا</a>
