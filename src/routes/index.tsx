@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Phone, MapPin, Clock, Droplet, SprayCan, Wrench, ShieldCheck, Sparkles, Gauge, CheckCircle2, ArrowLeft, Star, MessageCircle, Send, Navigation, Instagram, Facebook, Youtube, Music2, AtSign, Twitter } from "lucide-react";
+import { Phone, MapPin, Clock, Droplet, SprayCan, Wrench, ShieldCheck, Sparkles, Gauge, CheckCircle2, ArrowLeft, Star, MessageCircle, Send, Navigation, Instagram, Facebook, Youtube, Music2, AtSign, Twitter, Fuel } from "lucide-react";
 import { useState, useMemo } from "react";
 import { z } from "zod";
 import { toast, Toaster } from "sonner";
@@ -10,6 +10,7 @@ import rocLineupImg from "@/assets/roc-gzx-lineup.jpg";
 import detailingImg from "@/assets/detailing.jpg";
 import serviceImg from "@/assets/service.jpg";
 import { branches } from "@/data/branches";
+import { stations } from "@/data/stations";
 import { products } from "@/data/products";
 import branch1 from "@/assets/gallery/branch-1.jpg";
 import branch2 from "@/assets/gallery/branch-2.jpg";
@@ -150,6 +151,7 @@ function Index() {
       <Offers />
       <QuoteForm />
       <About />
+      <Stations />
       <Branches />
       <Gallery />
       <Testimonials />
@@ -178,6 +180,7 @@ function Nav() {
           <a href="#products" className="hover:text-brand transition">المنتجات</a>
           <a href="#oil-catalog" className="hover:text-brand transition">أنواع الزيوت</a>
           <a href="#gallery" className="hover:text-brand transition">معرض الصور</a>
+          <a href="#stations" className="hover:text-brand transition">المحطات</a>
           <a href="#branches" className="hover:text-brand transition">الفروع</a>
           <a href="#about" className="hover:text-brand transition">من نحن</a>
           <a href="#contact" className="hover:text-brand transition">تواصل معنا</a>
@@ -938,6 +941,56 @@ function FloatingWhatsApp() {
       <MessageCircle className="w-7 h-7" />
       <span className="absolute inline-flex h-full w-full rounded-full bg-[#25D366] opacity-40 animate-ping" />
     </a>
+  );
+}
+
+function Stations() {
+  return (
+    <section id="stations" className="py-24 md:py-32 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent pointer-events-none" />
+      <div className="max-w-7xl mx-auto px-5 lg:px-10 relative">
+        <div className="text-center max-w-2xl mx-auto mb-14">
+          <div className="text-brand font-bold text-sm tracking-widest mb-3">شبكة محطاتنا</div>
+          <h2 className="text-4xl md:text-6xl font-black leading-tight">
+            <span className="text-brand">{stations.length}</span> محطات في خدمتك
+          </h2>
+          <p className="text-muted-foreground mt-4 text-lg">
+            تجد محطات فوراكس سيرفس في أبرز المواقع — خدمات سريعة وأصلية على مدار طريقك.
+          </p>
+        </div>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {stations.map((st) => (
+            <div
+              key={st.id}
+              className="group relative bg-surface border border-border rounded-2xl p-6 hover:border-primary/60 transition-all hover:-translate-y-1 shadow-card flex flex-col"
+            >
+              <div className="flex items-center gap-4 mb-5">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-primary flex items-center justify-center shrink-0 shadow-glow group-hover:scale-110 transition-transform">
+                  <Fuel className="w-7 h-7 text-primary-foreground" />
+                </div>
+                <h3 className="text-xl font-black leading-tight">{st.name}</h3>
+              </div>
+
+              <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
+                <MapPin className="w-4 h-4 text-brand shrink-0" />
+                <span className="truncate">اضغط لعرض الموقع على الخريطة</span>
+              </div>
+
+              <a
+                href={st.mapUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-auto inline-flex items-center justify-center gap-2 bg-gradient-primary text-primary-foreground rounded-xl py-3 text-sm font-bold hover:scale-[1.02] transition shadow-glow"
+              >
+                <Navigation className="w-4 h-4" />
+                الاتجاه إلى المحطة
+              </a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
