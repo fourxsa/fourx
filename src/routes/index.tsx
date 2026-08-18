@@ -636,8 +636,9 @@ function CTA() {
             <div className="space-y-4">
               {[
                 { icon: Phone, label: "اتصل بنا", value: "+966 55 952 7343", href: "tel:+966559527343" },
-                { icon: MapPin, label: "الموقع", value: "الرياض - الربوة، المملكة العربية السعودية", href: "https://www.google.com/maps/place/24%C2%B048'12.4%22N+46%C2%B048'10.5%22E/@24.8034335,46.8051005,17z/data=!3m1!4b1!4m4!3m3!8m2!3d24.8034335!4d46.8029118?hl=ar&entry=ttu&g_ep=EgoyMDI2MDcxMi4wIKXMDSoASAFQAw%3D%3D" },
-                { icon: Clock, label: "ساعات العمل", value: "السبت - الخميس: 8 ص - 11 م" },
+                { icon: MapPin, label: "الموقع", value: "الرياض - حي إشبيليا، شارع النجاح", href: "https://www.google.com/maps/place/24%C2%B048'12.4%22N+46%C2%B048'10.5%22E/@24.8034335,46.8051005,17z/data=!3m1!4b1!4m4!3m3!8m2!3d24.8034335!4d46.8029118?hl=ar&entry=ttu&g_ep=EgoyMDI2MDcxMi4wIKXMDSoASAFQAw%3D%3D" },
+                { icon: Clock, label: "ساعات العمل", value: "السبت - الخميس: 8 ص - 4 م" },
+
               ].map((c) => (
                 <div key={c.label} className="flex items-center gap-4 bg-background/60 backdrop-blur border border-border rounded-xl p-5">
                   <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center shrink-0">
