@@ -6,6 +6,7 @@ import { toast, Toaster } from "sonner";
 import logoAsset from "@/assets/logo.png";
 import heroImg from "@/assets/hero.jpg";
 import oilsImg from "@/assets/oils.jpg";
+import rocLineupImg from "@/assets/roc-gzx-lineup.jpg";
 import detailingImg from "@/assets/detailing.jpg";
 import serviceImg from "@/assets/service.jpg";
 import { branches } from "@/data/branches";
@@ -127,8 +128,8 @@ const services = [
 ];
 
 const offers = [
-  { title: "4 علب زيت روك 5000", subtitle: "مع فلتر زيت + فحص مجاني", tag: "الأكثر طلباً", img: oilsImg },
-  { title: "4 علب زيت روك 10000", subtitle: "مع فلتر زيت + فحص مجاني", tag: "عرض مميز", img: oilsImg },
+  { title: "4 علب زيت روك 5000", subtitle: "مع فلتر زيت + فحص مجاني", tag: "الأكثر طلباً", img: rocLineupImg },
+  { title: "4 علب زيت روك 10000", subtitle: "مع فلتر زيت + فحص مجاني", tag: "عرض مميز", img: rocLineupImg },
 ];
 
 const testimonials = [
