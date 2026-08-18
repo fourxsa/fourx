@@ -100,9 +100,16 @@ export const Route = createFileRoute("/")({
           description:
             "مركز متخصص في تغيير الزيوت، العناية، التلميع، وصيانة السيارات الشاملة.",
           areaServed: "SA",
-          address: { "@type": "PostalAddress", addressCountry: "SA", addressRegion: "الرياض" },
-          telephone: "+966500000000",
-          openingHours: "Sa-Th 08:00-23:00",
+          address: {
+            "@type": "PostalAddress",
+            addressCountry: "SA",
+            addressRegion: "الرياض",
+            addressLocality: "الرياض",
+            streetAddress: "حي إشبيليا - شارع النجاح",
+          },
+          telephone: "+966559527343",
+          openingHours: "Sa-Th 08:00-16:00",
+
           aggregateRating: { "@type": "AggregateRating", ratingValue: "4.9", reviewCount: "250" },
         }),
       },
