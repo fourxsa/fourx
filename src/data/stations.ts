@@ -12,4 +12,5 @@ export const stations: Station[] = [
   { id: 5, name: "محطة اشبيليا", mapUrl: "https://maps.app.goo.gl/7XW1psHX2XGycpLp6?g_st=awb" },
   { id: 6, name: "محطة الفيحاء", mapUrl: "https://maps.app.goo.gl/YSS4cer56LW8Lhnt6?g_st=awb" },
   { id: 7, name: "محطة السويدي", mapUrl: "https://maps.app.goo.gl/E7TJ6FN4bnioKuC46?g_st=awb" },
+  { id: 8, name: "محطة القدس", mapUrl: "https://maps.app.goo.gl/DhFPgibrQLm3mZfn9?g_st=awb" },
 ];
