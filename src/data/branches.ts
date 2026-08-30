@@ -37,4 +37,8 @@ export const branches: Branch[] = [
   { id: 14, name: "فرع مبروكة", city: "القصيم", mapUrl: "https://maps.app.goo.gl/NdyxHpJvFZXaLyAd8", services: s("زيوت بطاريات اطارات"), phone: "0544006487" },
   { id: 15, name: "فرع الريان", city: "القصيم", mapUrl: "https://share.google/Lk7iKu37MAlU6z8uS", services: s("زيوت بطاريات اطارات"), phone: "0536909764" },
   { id: 16, name: "فرع التحلية", city: "الدمام", mapUrl: "https://maps.app.goo.gl/Vx9NuNuqDUVTMBGq9", services: s("زيوت بطاريات اطارات"), phone: "0544917665" },
+  { id: 17, name: "فرع البيان", city: "الرياض", mapUrl: "https://maps.app.goo.gl/sPjM8V8WFCVsT9wWA", services: s("زيوت بطاريات اطارات"), phone: "0505989387" },
+  { id: 18, name: "فرع العقيق", city: "الرياض", mapUrl: "https://maps.app.goo.gl/8riQxTy9as9NJy8v7", services: s("زيوت بطاريات اطارات مغسلة"), phone: "0576213034" },
+  { id: 19, name: "فرع القادسية", city: "الرياض", mapUrl: "https://maps.app.goo.gl/MUps3HQAgmpWeGMP8", services: s("زيوت"), phone: "0532718909" },
+  { id: 20, name: "محل طريق الملك عبدالله", city: "الرياض", mapUrl: "https://maps.app.goo.gl/Y3cgQc2xkBoCkqvJA?g_st=awb", services: s("زيوت اطارات"), phone: "0502744928" },
 ];
