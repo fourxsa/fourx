@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Phone, MapPin, Clock, Droplet, SprayCan, Wrench, ShieldCheck, Sparkles, Gauge, CheckCircle2, ArrowLeft, Star, MessageCircle, Send, Navigation, Instagram, Facebook, Youtube, Music2, AtSign, Twitter, Fuel } from "lucide-react";
+import { Phone, MapPin, Clock, Droplet, SprayCan, Wrench, ShieldCheck, Sparkles, Gauge, CheckCircle2, ArrowLeft, Star, MessageCircle, Send, Navigation, Instagram, Facebook, Youtube, Music2, AtSign, Twitter, Fuel, CupSoda } from "lucide-react";
 import { useState, useMemo } from "react";
 import { z } from "zod";
 import { toast, Toaster } from "sonner";
@@ -11,6 +11,7 @@ import detailingImg from "@/assets/detailing.jpg";
 import serviceImg from "@/assets/service.jpg";
 import { branches } from "@/data/branches";
 import { stations } from "@/data/stations";
+import teaImg from "@/assets/tea-world.jpg";
 import { products } from "@/data/products";
 import branch1 from "@/assets/gallery/branch-1.jpg";
 import branch2 from "@/assets/gallery/branch-2.jpg";
@@ -152,6 +153,7 @@ function Index() {
       <QuoteForm />
       <About />
       <Stations />
+      <TeaWorld />
       <Branches />
       <Gallery />
       <Testimonials />
@@ -181,6 +183,7 @@ function Nav() {
           <a href="#oil-catalog" className="hover:text-brand transition">أنواع الزيوت</a>
           <a href="#gallery" className="hover:text-brand transition">معرض الصور</a>
           <a href="#stations" className="hover:text-brand transition">المحطات</a>
+          <a href="#tea" className="hover:text-brand transition">عالم الشاي</a>
           <a href="#branches" className="hover:text-brand transition">الفروع</a>
           <a href="#about" className="hover:text-brand transition">من نحن</a>
           <a href="#contact" className="hover:text-brand transition">تواصل معنا</a>
@@ -941,6 +944,62 @@ function FloatingWhatsApp() {
       <MessageCircle className="w-7 h-7" />
       <span className="absolute inline-flex h-full w-full rounded-full bg-[#25D366] opacity-40 animate-ping" />
     </a>
+  );
+}
+
+function TeaWorld() {
+  return (
+    <section id="tea" className="py-24 md:py-32 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-brand/5 to-transparent pointer-events-none" />
+      <div className="max-w-7xl mx-auto px-5 lg:px-10 relative">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="relative order-2 lg:order-1">
+            <div className="absolute -inset-4 bg-gradient-primary opacity-20 blur-3xl rounded-full" />
+            <img
+              src={teaImg}
+              alt="عالم الشاي - ركن الضيافة في فوراكس سيرفس"
+              loading="lazy"
+              width={1280}
+              height={860}
+              className="relative rounded-3xl border border-border shadow-card w-full object-cover"
+            />
+          </div>
+
+          <div className="order-1 lg:order-2">
+            <div className="inline-flex items-center gap-2 text-brand font-bold text-sm tracking-widest mb-4">
+              <CupSoda className="w-4 h-4" />
+              عالم الشاي
+            </div>
+            <h2 className="text-4xl md:text-6xl font-black leading-tight mb-5">
+              سيارتك في العناية… <span className="text-brand">وأنت مع كوب شاي</span>
+            </h2>
+            <p className="text-muted-foreground text-lg leading-relaxed mb-8">
+              خلّ الفني يشتغل على سيارتك، وخذ لك جلسة هدوء مع كوب شاي دافئ. عندنا الانتظار
+              له طعم ثاني — ضيافة كريمة، رائحة نعناع، ووقت يمر بسرعة.
+            </p>
+
+            <div className="flex flex-wrap gap-3 mb-8">
+              {["شاي طازج على مدار اليوم", "ركن انتظار مريح", "ضيافة على حسابنا"].map((t) => (
+                <span key={t} className="inline-flex items-center gap-2 bg-surface border border-border rounded-full px-4 py-2 text-sm">
+                  <CheckCircle2 className="w-4 h-4 text-brand" />
+                  {t}
+                </span>
+              ))}
+            </div>
+
+            <a
+              href="https://maps.app.goo.gl/6fZrM53H9Wa7XsUM7"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-gradient-primary text-primary-foreground font-bold px-7 py-4 rounded-xl shadow-glow hover:scale-105 transition-transform"
+            >
+              <Navigation className="w-5 h-5" />
+              موقع عالم الشاي على الخريطة
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
