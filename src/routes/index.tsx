@@ -1,18 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Phone, MapPin, Clock, Droplet, SprayCan, Wrench, ShieldCheck, Sparkles, Gauge, CheckCircle2, ArrowLeft, Star, MessageCircle, Send, Navigation, Instagram, Facebook, Youtube, Music2, AtSign, Twitter, Fuel, CupSoda } from "lucide-react";
+import { Phone, MapPin, Clock, Droplet, SprayCan, Wrench, ShieldCheck, Sparkles, Gauge, CheckCircle2, ArrowLeft, ArrowRight, Star, MessageCircle, Send, Navigation, Instagram, Facebook, Youtube, Music2, AtSign, Twitter, Fuel, CupSoda, Globe } from "lucide-react";
 import { useState, useMemo } from "react";
 import { z } from "zod";
 import { toast, Toaster } from "sonner";
 import logoAsset from "@/assets/logo.png";
 import heroImg from "@/assets/hero.jpg";
-import oilsImg from "@/assets/oils.jpg";
 import rocLineupImg from "@/assets/roc-gzx-lineup.jpg";
 import detailingImg from "@/assets/detailing.jpg";
 import serviceImg from "@/assets/service.jpg";
 import { branches } from "@/data/branches";
 import { stations } from "@/data/stations";
 import teaImg from "@/assets/tea-world.jpg";
-import { products } from "@/data/products";
+import { products, CATEGORY_EN, type ProductCategory } from "@/data/products";
+import { I18nProvider, useI18n } from "@/lib/i18n";
 import branch1 from "@/assets/gallery/branch-1.jpg";
 import branch2 from "@/assets/gallery/branch-2.jpg";
 import branch3 from "@/assets/gallery/branch-3.jpg";
@@ -28,26 +28,29 @@ import gInfo2 from "@/assets/gallery/info-2.jpg";
 import gInfo3 from "@/assets/gallery/info-3.jpg";
 import gInfo4 from "@/assets/gallery/info-4.jpg";
 
-const GALLERY = [
-  { src: gRocLineup, caption: "زيوت ROC GZX الأصلية" },
-  { src: gPromo1, caption: "عرض خاص - 4 علب زيت روك 5000" },
-  { src: gPromo2, caption: "عرض خاص - 4 علب زيت روك 10000" },
-  { src: gFreeServices, caption: "الخدمات المجانية" },
-  { src: gInfo1, caption: "معلومات فوراكس سيرفس" },
-  { src: gInfo2, caption: "معلومات فوراكس سيرفس" },
-  { src: gInfo3, caption: "معلومات فوراكس سيرفس" },
-  { src: gInfo4, caption: "معلومات فوراكس سيرفس" },
-  { src: gTerms, caption: "الشروط والأحكام" },
-  { src: branch1, caption: "من داخل الفرع" },
-  { src: branch2, caption: "من داخل الفرع" },
-  { src: branch3, caption: "من داخل الفرع" },
-  { src: branch4, caption: "من داخل الفرع" },
-  { src: branch5, caption: "من داخل الفرع" },
-];
+type CaptionKey = "roc" | "promo1" | "promo2" | "free" | "info" | "terms" | "branch";
 
+const GALLERY: Array<{ src: string; key: CaptionKey }> = [
+  { src: gRocLineup, key: "roc" },
+  { src: gPromo1, key: "promo1" },
+  { src: gPromo2, key: "promo2" },
+  { src: gFreeServices, key: "free" },
+  { src: gInfo1, key: "info" },
+  { src: gInfo2, key: "info" },
+  { src: gInfo3, key: "info" },
+  { src: gInfo4, key: "info" },
+  { src: gTerms, key: "terms" },
+  { src: branch1, key: "branch" },
+  { src: branch2, key: "branch" },
+  { src: branch3, key: "branch" },
+  { src: branch4, key: "branch" },
+  { src: branch5, key: "branch" },
+];
 
 const WHATSAPP_NUMBER = "966559527343";
 const WHATSAPP_DISPLAY = "+966 55 952 7343";
+const MAP_URL =
+  "https://www.google.com/maps/place/24%C2%B048'12.4%22N+46%C2%B048'10.5%22E/@24.8034335,46.8051005,17z/data=!3m1!4b1!4m4!3m3!8m2!3d24.8034335!4d46.8029118?hl=ar&entry=ttu&g_ep=EgoyMDI2MDcxMi4wIKXMDSoASAFQAw%3D%3D";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -66,7 +69,7 @@ export const Route = createFileRoute("/")({
       },
       { name: "author", content: "4X Service" },
       { name: "robots", content: "index, follow" },
-      { httpEquiv: "content-language", content: "ar" },
+      { httpEquiv: "content-language", content: "ar, en" },
 
       { property: "og:title", content: "فوراكس سيرفس | زيوت وعناية وصيانة السيارات" },
       {
@@ -120,29 +123,20 @@ export const Route = createFileRoute("/")({
   }),
 });
 
-const services = [
-  { icon: Droplet, title: "تغيير الزيوت", desc: "زيوت أصلية عالية الجودة لجميع أنواع المركبات مع فلاتر معتمدة." },
-  { icon: SprayCan, title: "زينة وتلميع", desc: "تلميع خارجي، تنظيف داخلي، وحماية سيراميك احترافية." },
-  { icon: Wrench, title: "صيانة شاملة", desc: "فحص محرك، فرامل، تعليق، ونظام تبريد بأحدث الأجهزة." },
-  { icon: Gauge, title: "فحص مجاني", desc: "فحص كمبيوتر شامل مجاناً مع كل خدمة زيت." },
-  { icon: ShieldCheck, title: "قطع أصلية", desc: "قطع غيار معتمدة مع ضمان على الخدمة." },
-  { icon: Sparkles, title: "غسيل داخلي وخارجي", desc: "تنظيف عميق للمقاعد والفرش بأدوات متخصصة." },
-];
-
-const offers = [
-  { title: "4 علب زيت روك 5000", subtitle: "مع فلتر زيت + فحص مجاني", tag: "الأكثر طلباً", img: rocLineupImg },
-  { title: "4 علب زيت روك 10000", subtitle: "مع فلتر زيت + فحص مجاني", tag: "عرض مميز", img: rocLineupImg },
-];
-
-const testimonials = [
-  { name: "أحمد الشمري", text: "خدمة ممتازة وسرعة في الإنجاز. الأسعار مناسبة والفريق محترف جداً.", rating: 5 },
-  { name: "فهد العتيبي", text: "أفضل مركز جربته لتغيير الزيت، فحص شامل ونصائح مفيدة.", rating: 5 },
-  { name: "خالد المطيري", text: "تعامل راقي ونظافة عالية. سيارتي طلعت كالجديدة بعد التلميع.", rating: 5 },
-];
+const serviceIcons = [Droplet, SprayCan, Wrench, Gauge, ShieldCheck, Sparkles];
 
 function Index() {
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans overflow-x-hidden">
+    <I18nProvider>
+      <Page />
+    </I18nProvider>
+  );
+}
+
+function Page() {
+  const { dir } = useI18n();
+  return (
+    <div dir={dir} className="min-h-screen bg-background text-foreground font-sans overflow-x-hidden">
       <Nav />
       <Hero />
       <Marquee />
@@ -165,43 +159,76 @@ function Index() {
   );
 }
 
+function Arrow({ className = "" }: { className?: string }) {
+  const { dir } = useI18n();
+  const Icon = dir === "rtl" ? ArrowLeft : ArrowRight;
+  return <Icon className={className} />;
+}
+
+function LangSwitch({ className = "" }: { className?: string }) {
+  const { lang, setLang, t } = useI18n();
+  return (
+    <button
+      type="button"
+      onClick={() => setLang(lang === "ar" ? "en" : "ar")}
+      className={`inline-flex items-center gap-2 border border-border bg-surface px-3 py-2 rounded-lg text-sm font-bold hover:border-primary/60 transition ${className}`}
+      aria-label={t.switchLabel}
+    >
+      <Globe className="w-4 h-4 text-brand" />
+      {t.switchLabel}
+    </button>
+  );
+}
+
 function Nav() {
+  const { t } = useI18n();
+  const links = [
+    ["#services", t.nav.services],
+    ["#offers", t.nav.offers],
+    ["#products", t.nav.products],
+    ["#oil-catalog", t.nav.catalog],
+    ["#gallery", t.nav.gallery],
+    ["#stations", t.nav.stations],
+    ["#tea", t.nav.tea],
+    ["#branches", t.nav.branches],
+    ["#about", t.nav.about],
+    ["#contact", t.nav.contact],
+  ];
   return (
     <header className="sticky top-0 z-50 backdrop-blur-lg bg-background/80 border-b border-border">
-      <div className="max-w-7xl mx-auto px-5 lg:px-10 h-20 flex items-center justify-between">
-        <a href="#home" className="flex items-center gap-3">
+      <div className="max-w-7xl mx-auto px-5 lg:px-10 h-20 flex items-center justify-between gap-4">
+        <a href="#home" className="flex items-center gap-3 shrink-0">
           <img src={logoAsset} alt="4X Service" className="h-12 w-12" />
           <div className="flex flex-col leading-tight">
-            <span className="text-lg font-black tracking-tight">فوراكس سيرفس</span>
+            <span className="text-lg font-black tracking-tight">{t.nav.brand}</span>
             <span className="text-[11px] text-muted-foreground tracking-widest">4X SERVICE</span>
           </div>
         </a>
-        <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
-          <a href="#services" className="hover:text-brand transition">الخدمات</a>
-          <a href="#offers" className="hover:text-brand transition">العروض</a>
-          <a href="#products" className="hover:text-brand transition">المنتجات</a>
-          <a href="#oil-catalog" className="hover:text-brand transition">أنواع الزيوت</a>
-          <a href="#gallery" className="hover:text-brand transition">معرض الصور</a>
-          <a href="#stations" className="hover:text-brand transition">المحطات</a>
-          <a href="#tea" className="hover:text-brand transition">عالم الشاي</a>
-          <a href="#branches" className="hover:text-brand transition">الفروع</a>
-          <a href="#about" className="hover:text-brand transition">من نحن</a>
-          <a href="#contact" className="hover:text-brand transition">تواصل معنا</a>
+        <nav className="hidden xl:flex items-center gap-6 text-sm font-medium">
+          {links.map(([href, label]) => (
+            <a key={href} href={href} className="hover:text-brand transition">
+              {label}
+            </a>
+          ))}
         </nav>
-        <a href="#quote" className="hidden sm:inline-flex items-center gap-2 bg-gradient-primary text-primary-foreground font-bold px-5 py-2.5 rounded-lg shadow-glow hover:scale-105 transition-transform">
-          <Sparkles className="w-4 h-4" />
-          اطلب عرض
-        </a>
+        <div className="flex items-center gap-2">
+          <LangSwitch />
+          <a href="#quote" className="hidden sm:inline-flex items-center gap-2 bg-gradient-primary text-primary-foreground font-bold px-5 py-2.5 rounded-lg shadow-glow hover:scale-105 transition-transform">
+            <Sparkles className="w-4 h-4" />
+            {t.nav.quote}
+          </a>
+        </div>
       </div>
     </header>
   );
 }
 
 function Hero() {
+  const { t } = useI18n();
   return (
     <section id="home" className="relative min-h-[92vh] flex items-center overflow-hidden">
       <div className="absolute inset-0">
-        <img src={heroImg} alt="خدمة السيارات" className="w-full h-full object-cover opacity-40" width={1920} height={1200} />
+        <img src={heroImg} alt={t.hero.heroAlt} className="w-full h-full object-cover opacity-40" width={1920} height={1200} />
         <div className="absolute inset-0 bg-gradient-hero opacity-90" />
         <div className="absolute inset-0 diagonal-stripe" />
       </div>
@@ -210,31 +237,25 @@ function Hero() {
         <div className="lg:col-span-7 space-y-8">
           <div className="inline-flex items-center gap-2 bg-primary/15 border border-primary/30 text-primary px-4 py-2 rounded-full text-sm font-bold">
             <Sparkles className="w-4 h-4" />
-            مركز صيانة السيارات #1 في المنطقة
+            {t.hero.badge}
           </div>
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.95] tracking-tight">
-            سيارتك تستحق
+            {t.hero.title1}
             <br />
-            <span className="bg-gradient-primary bg-clip-text text-transparent">خدمة استثنائية</span>
+            <span className="bg-gradient-primary bg-clip-text text-transparent">{t.hero.title2}</span>
           </h1>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed">
-            زيوت أصلية، أجهزة فحص متطورة، وفريق فني معتمد. نعتني بسيارتك كأنها سيارتنا — بسرعة واحترافية.
-          </p>
+          <p className="text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed">{t.hero.sub}</p>
           <div className="flex flex-wrap gap-4">
             <a href="#offers" className="group inline-flex items-center gap-3 bg-gradient-primary text-primary-foreground font-bold px-8 py-4 rounded-xl shadow-glow hover:scale-105 transition-transform">
-              شاهد العروض الحصرية
-              <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+              {t.hero.ctaOffers}
+              <Arrow className="w-5 h-5" />
             </a>
             <a href="#services" className="inline-flex items-center gap-2 border border-border bg-surface/60 backdrop-blur px-8 py-4 rounded-xl font-bold hover:bg-surface transition">
-              خدماتنا
+              {t.hero.ctaServices}
             </a>
           </div>
           <div className="flex flex-wrap gap-8 pt-6 border-t border-border/50">
-            {[
-              { n: "+15", l: "سنة خبرة" },
-              { n: "+25K", l: "عميل راضٍ" },
-              { n: "24/7", l: "دعم فني" },
-            ].map((s) => (
+            {t.hero.stats.map((s) => (
               <div key={s.l}>
                 <div className="text-3xl font-black text-brand">{s.n}</div>
                 <div className="text-xs text-muted-foreground mt-1">{s.l}</div>
@@ -245,14 +266,14 @@ function Hero() {
 
         <div className="lg:col-span-5 relative">
           <div className="relative rounded-3xl overflow-hidden shadow-card border border-border/50">
-            <img src={detailingImg} alt="تلميع السيارات" className="w-full h-[500px] object-cover" width={1200} height={900} loading="lazy" />
+            <img src={detailingImg} alt={t.hero.detailAlt} className="w-full h-[500px] object-cover" width={1200} height={900} loading="lazy" />
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
-            <div className="absolute bottom-6 right-6 left-6 bg-surface/90 backdrop-blur-lg border border-primary/30 rounded-2xl p-5">
+            <div className="absolute bottom-6 inset-x-6 bg-surface/90 backdrop-blur-lg border border-primary/30 rounded-2xl p-5">
               <div className="flex items-center justify-between">
                 <div>
-                  <div className="text-xs text-muted-foreground">عرض اليوم</div>
-                  <div className="text-2xl font-black">فلتر مكيف مجاناً</div>
-                  <div className="text-sm text-brand mt-1">عند تغيير فلتر الهواء</div>
+                  <div className="text-xs text-muted-foreground">{t.hero.todayOffer}</div>
+                  <div className="text-2xl font-black">{t.hero.freeAc}</div>
+                  <div className="text-sm text-brand mt-1">{t.hero.freeAcSub}</div>
                 </div>
                 <div className="bg-gradient-primary rounded-xl p-3">
                   <Sparkles className="w-8 h-8 text-primary-foreground" />
@@ -267,14 +288,15 @@ function Hero() {
 }
 
 function Marquee() {
-  const items = ["زيوت أصلية", "فحص مجاني", "قطع معتمدة", "فنيون خبراء", "خدمة سريعة"];
+  const { t } = useI18n();
+  const items = t.marquee;
   return (
     <div className="border-y border-border bg-surface overflow-hidden">
       <div className="flex gap-16 py-5 animate-[scroll_30s_linear_infinite] whitespace-nowrap">
-        {[...items, ...items, ...items].map((t, i) => (
+        {[...items, ...items, ...items].map((txt, i) => (
           <div key={i} className="flex items-center gap-3 text-lg font-bold text-muted-foreground">
             <span className="w-2 h-2 rounded-full bg-primary" />
-            {t}
+            {txt}
           </div>
         ))}
       </div>
@@ -284,28 +306,32 @@ function Marquee() {
 }
 
 function Services() {
+  const { t } = useI18n();
   return (
     <section id="services" className="py-24 md:py-32 relative">
       <div className="max-w-7xl mx-auto px-5 lg:px-10">
         <div className="max-w-2xl mb-16">
-          <div className="text-brand font-bold text-sm tracking-widest mb-3">خدماتنا</div>
+          <div className="text-brand font-bold text-sm tracking-widest mb-3">{t.services.eyebrow}</div>
           <h2 className="text-4xl md:text-6xl font-black leading-tight">
-            كل ما تحتاجه سيارتك <span className="text-brand">تحت سقف واحد</span>
+            {t.services.title1} <span className="text-brand">{t.services.title2}</span>
           </h2>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {services.map((s, i) => (
-            <div key={i} className="group relative bg-surface border border-border rounded-2xl p-8 hover:border-primary/60 transition-all hover:-translate-y-1 shadow-card">
-              <div className="w-14 h-14 rounded-xl bg-gradient-primary flex items-center justify-center mb-6 shadow-glow">
-                <s.icon className="w-7 h-7 text-primary-foreground" />
+          {t.services.items.map((s, i) => {
+            const Icon = serviceIcons[i];
+            return (
+              <div key={i} className="group relative bg-surface border border-border rounded-2xl p-8 hover:border-primary/60 transition-all hover:-translate-y-1 shadow-card">
+                <div className="w-14 h-14 rounded-xl bg-gradient-primary flex items-center justify-center mb-6 shadow-glow">
+                  <Icon className="w-7 h-7 text-primary-foreground" />
+                </div>
+                <h3 className="text-xl font-black mb-2">{s.title}</h3>
+                <p className="text-muted-foreground leading-relaxed">{s.desc}</p>
+                <div className="absolute top-6 ltr:right-6 rtl:left-6 text-6xl font-black text-primary/10 group-hover:text-primary/20 transition">
+                  0{i + 1}
+                </div>
               </div>
-              <h3 className="text-xl font-black mb-2">{s.title}</h3>
-              <p className="text-muted-foreground leading-relaxed">{s.desc}</p>
-              <div className="absolute top-6 left-6 text-6xl font-black text-primary/10 group-hover:text-primary/20 transition">
-                0{i + 1}
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
@@ -313,12 +339,15 @@ function Services() {
 }
 
 function Products() {
-  const [filter, setFilter] = useState<"الكل" | "بنزين" | "ديزل" | "ناقل حركة">("الكل");
+  const { t, lang } = useI18n();
+  const [filter, setFilter] = useState<ProductCategory | "all">("all");
   const filtered = useMemo(
-    () => (filter === "الكل" ? products : products.filter((p) => p.category === filter)),
+    () => (filter === "all" ? products : products.filter((p) => p.category === filter)),
     [filter],
   );
-  const cats: Array<"الكل" | "بنزين" | "ديزل" | "ناقل حركة"> = ["الكل", "بنزين", "ديزل", "ناقل حركة"];
+  const cats: Array<ProductCategory | "all"> = ["all", "بنزين", "ديزل", "ناقل حركة"];
+  const catLabel = (c: ProductCategory | "all") =>
+    c === "all" ? t.products.all : lang === "ar" ? c : CATEGORY_EN[c];
 
   return (
     <section id="products" className="py-24 md:py-32 relative overflow-hidden">
@@ -326,13 +355,11 @@ function Products() {
       <div className="relative max-w-7xl mx-auto px-5 lg:px-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div className="max-w-2xl">
-            <div className="text-brand font-bold text-sm tracking-widest mb-3">منتجاتنا</div>
+            <div className="text-brand font-bold text-sm tracking-widest mb-3">{t.products.eyebrow}</div>
             <h2 className="text-4xl md:text-6xl font-black leading-tight">
-              زيوت <span className="text-brand">ROC GZX</span> الأصلية
+              {t.products.title1} <span className="text-brand">ROC GZX</span> {t.products.title2}
             </h2>
-            <p className="text-muted-foreground mt-4 text-lg">
-              زيوت محرك وناقل حركة تخليقية بتقنية أمريكية، مصنوعة من زيوت بكر 100% من أرامكو.
-            </p>
+            <p className="text-muted-foreground mt-4 text-lg">{t.products.sub}</p>
           </div>
           <div className="flex gap-2 flex-wrap">
             {cats.map((c) => (
@@ -345,7 +372,7 @@ function Products() {
                     : "bg-surface border-border hover:border-primary/50"
                 }`}
               >
-                {c}
+                {catLabel(c)}
               </button>
             ))}
           </div>
@@ -358,8 +385,8 @@ function Products() {
               className="group relative bg-surface border border-border rounded-3xl overflow-hidden hover:border-primary/60 transition-all hover:-translate-y-1 shadow-card"
             >
               {p.badge && (
-                <div className="absolute top-4 right-4 z-10 bg-gradient-primary text-primary-foreground text-[10px] font-black px-2.5 py-1 rounded-full">
-                  {p.badge}
+                <div className="absolute top-4 ltr:left-4 rtl:right-4 z-10 bg-gradient-primary text-primary-foreground text-[10px] font-black px-2.5 py-1 rounded-full">
+                  {lang === "ar" ? p.badge : p.badgeEn}
                 </div>
               )}
               <div className={`relative h-64 bg-gradient-to-br ${p.accent} flex items-center justify-center overflow-hidden`}>
@@ -373,22 +400,26 @@ function Products() {
               </div>
               <div className="p-5 space-y-2">
                 <div className="flex items-center justify-between gap-2">
-                  <div className="text-xs text-muted-foreground font-bold tracking-wider">{p.category}</div>
+                  <div className="text-xs text-muted-foreground font-bold tracking-wider">
+                    {lang === "ar" ? p.category : CATEGORY_EN[p.category]}
+                  </div>
                   <div className="text-xs text-brand font-black">{p.grade}</div>
                 </div>
                 <h3 className="text-lg font-black leading-tight">{p.name}</h3>
                 <div className="text-[11px] text-muted-foreground font-mono">{p.spec}</div>
-                <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">{p.desc}</p>
+                <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
+                  {lang === "ar" ? p.desc : p.descEn}
+                </p>
                 <a
                   href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-                    `مرحباً، أبغى استفسر عن منتج ${p.name} ${p.grade}`,
+                    t.products.inquiryMsg(`${p.name} ${p.grade}`),
                   )}`}
                   target="_blank"
                   rel="noopener"
                   className="mt-3 inline-flex items-center gap-2 text-sm font-bold text-brand hover:gap-3 transition-all"
                 >
-                  استفسر عبر واتساب
-                  <ArrowLeft className="w-4 h-4" />
+                  {t.products.inquire}
+                  <Arrow className="w-4 h-4" />
                 </a>
               </div>
             </div>
@@ -400,40 +431,35 @@ function Products() {
 }
 
 function OilCatalog() {
-  const groups: Array<{ key: "بنزين" | "ديزل" | "ناقل حركة"; title: string; subtitle: string }> = [
-    { key: "بنزين", title: "زيوت محركات البنزين", subtitle: "Gasoline Engine Oils" },
-    { key: "ديزل", title: "زيوت محركات الديزل", subtitle: "Diesel Engine Oils" },
-    { key: "ناقل حركة", title: "زيوت ناقل الحركة - القير", subtitle: "Transmission Fluids" },
-  ];
+  const { t, lang } = useI18n();
+  const groups: ProductCategory[] = ["بنزين", "ديزل", "ناقل حركة"];
 
   return (
     <section id="oil-catalog" className="py-24 md:py-32 bg-surface relative overflow-hidden">
       <div className="absolute inset-0 diagonal-stripe opacity-30" />
       <div className="relative max-w-7xl mx-auto px-5 lg:px-10">
         <div className="text-center mb-16 max-w-3xl mx-auto">
-          <div className="text-brand font-bold text-sm tracking-widest mb-3">كتالوج الزيوت</div>
+          <div className="text-brand font-bold text-sm tracking-widest mb-3">{t.catalog.eyebrow}</div>
           <h2 className="text-4xl md:text-6xl font-black leading-tight">
-            أنواع <span className="text-brand">الزيوت</span> ومواصفاتها
+            {t.catalog.title1} <span className="text-brand">{t.catalog.title2}</span> {t.catalog.title3}
           </h2>
-          <p className="text-muted-foreground mt-4 text-lg">
-            جميع منتجات <b>روك</b> مصنعة من زيوت بكر 100% من أرامكو بتقنية أمريكية لضمان الجودة والاعتمادية في أصعب الظروف المناخية.
-          </p>
+          <p className="text-muted-foreground mt-4 text-lg">{t.catalog.sub}</p>
         </div>
 
         <div className="space-y-16">
           {groups.map((g) => {
-            const items = products.filter((p) => p.category === g.key);
+            const items = products.filter((p) => p.category === g);
             return (
-              <div key={g.key}>
+              <div key={g}>
                 <div className="flex items-end justify-between gap-4 mb-6 border-b border-border pb-4">
                   <div>
-                    <h3 className="text-2xl md:text-3xl font-black">{g.title}</h3>
+                    <h3 className="text-2xl md:text-3xl font-black">{t.catalog.groups[g]}</h3>
                     <div className="text-xs md:text-sm text-muted-foreground tracking-widest mt-1 font-mono">
-                      {g.subtitle}
+                      {CATEGORY_EN[g]}
                     </div>
                   </div>
                   <div className="text-xs text-brand font-black bg-primary/10 border border-primary/30 px-3 py-1.5 rounded-full">
-                    {items.length} منتجات
+                    {t.catalog.count(items.length)}
                   </div>
                 </div>
 
@@ -463,12 +489,15 @@ function OilCatalog() {
                         <div className="space-y-1.5 text-sm">
                           <div className="flex gap-2">
                             <CheckCircle2 className="w-4 h-4 text-brand shrink-0 mt-0.5" />
-                            <p className="text-muted-foreground leading-relaxed">{p.features}</p>
+                            <p className="text-muted-foreground leading-relaxed">
+                              {lang === "ar" ? p.features : p.featuresEn}
+                            </p>
                           </div>
                           <div className="flex gap-2">
                             <Gauge className="w-4 h-4 text-brand shrink-0 mt-0.5" />
                             <p className="text-muted-foreground leading-relaxed">
-                              <b className="text-foreground">الاستخدام: </b>{p.usage}
+                              <b className="text-foreground">{t.catalog.usage}</b>
+                              {lang === "ar" ? p.usage : p.usageEn}
                             </p>
                           </div>
                         </div>
@@ -486,25 +515,26 @@ function OilCatalog() {
 }
 
 function Offers() {
+  const { t } = useI18n();
   return (
     <section id="offers" className="py-24 md:py-32 bg-surface relative">
       <div className="absolute inset-0 diagonal-stripe opacity-50" />
       <div className="relative max-w-7xl mx-auto px-5 lg:px-10">
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 bg-primary/15 border border-primary/30 text-primary px-4 py-2 rounded-full text-sm font-bold mb-4">
-            عروض حصرية لفترة محدودة
+            {t.offers.badge}
           </div>
-          <h2 className="text-4xl md:text-6xl font-black">اغتنم العرض قبل انتهائه</h2>
+          <h2 className="text-4xl md:text-6xl font-black">{t.offers.title}</h2>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
-          {offers.map((o, i) => (
+          {t.offers.items.map((o, i) => (
             <div key={i} className="relative bg-background border-2 border-border rounded-3xl overflow-hidden hover:border-primary transition-all group shadow-card">
-              <div className="absolute top-6 right-6 z-10 bg-gradient-primary text-primary-foreground text-xs font-black px-3 py-1.5 rounded-full">
+              <div className="absolute top-6 ltr:left-6 rtl:right-6 z-10 bg-gradient-primary text-primary-foreground text-xs font-black px-3 py-1.5 rounded-full">
                 {o.tag}
               </div>
               <div className="relative h-56 overflow-hidden bg-gradient-hero">
-                <img src={o.img} alt={o.title} className="w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-700" width={1200} height={900} loading="lazy" />
+                <img src={rocLineupImg} alt={o.title} className="w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-700" width={1200} height={900} loading="lazy" />
               </div>
               <div className="p-8">
                 <div className="mb-6">
@@ -514,7 +544,7 @@ function Offers() {
                   </div>
                 </div>
                 <div className="space-y-2 mb-6">
-                  {["4 علب زيت أصلي", "فلتر زيت جديد", "فحص مجاني شامل"].map((f) => (
+                  {t.offers.features.map((f) => (
                     <div key={f} className="flex items-center gap-2 text-sm">
                       <CheckCircle2 className="w-4 h-4 text-brand" />
                       {f}
@@ -522,7 +552,7 @@ function Offers() {
                   ))}
                 </div>
                 <a href="tel:+966559527343" className="block text-center bg-gradient-primary text-primary-foreground font-bold py-3.5 rounded-xl hover:scale-[1.02] transition-transform shadow-glow">
-                  احجز موعدك الآن
+                  {t.offers.book}
                 </a>
               </div>
             </div>
@@ -531,12 +561,12 @@ function Offers() {
 
         <div className="mt-10 bg-gradient-primary rounded-3xl p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6 text-primary-foreground">
           <div>
-            <div className="text-sm font-bold opacity-80 mb-1">عرض إضافي</div>
-            <div className="text-2xl md:text-3xl font-black">احصل على فلتر المكيف مجاناً</div>
-            <div className="opacity-90 mt-1">عند تغيير فلتر الهواء في أي زيارة</div>
+            <div className="text-sm font-bold opacity-80 mb-1">{t.offers.extraTag}</div>
+            <div className="text-2xl md:text-3xl font-black">{t.offers.extraTitle}</div>
+            <div className="opacity-90 mt-1">{t.offers.extraSub}</div>
           </div>
           <a href="tel:+966559527343" className="bg-background text-foreground font-black px-8 py-4 rounded-xl hover:scale-105 transition">
-            استفد الآن
+            {t.offers.extraCta}
           </a>
         </div>
       </div>
@@ -545,28 +575,27 @@ function Offers() {
 }
 
 function About() {
+  const { t } = useI18n();
   return (
     <section id="about" className="py-24 md:py-32">
       <div className="max-w-7xl mx-auto px-5 lg:px-10 grid lg:grid-cols-2 gap-16 items-center">
         <div className="relative">
           <div className="rounded-3xl overflow-hidden shadow-card border border-border">
-            <img src={serviceImg} alt="ورشة السيارات" className="w-full h-[520px] object-cover" width={1200} height={900} loading="lazy" />
+            <img src={serviceImg} alt={t.about.alt} className="w-full h-[520px] object-cover" width={1200} height={900} loading="lazy" />
           </div>
-          <div className="absolute -bottom-8 -right-8 bg-gradient-primary rounded-2xl p-6 shadow-glow max-w-[220px]">
+          <div className="absolute -bottom-8 ltr:-left-8 rtl:-right-8 bg-gradient-primary rounded-2xl p-6 shadow-glow max-w-[220px]">
             <div className="text-4xl font-black text-primary-foreground">+15</div>
-            <div className="text-sm text-primary-foreground/90 font-bold mt-1">سنة من الخبرة في خدمة السيارات</div>
+            <div className="text-sm text-primary-foreground/90 font-bold mt-1">{t.about.years}</div>
           </div>
         </div>
         <div className="space-y-6">
-          <div className="text-brand font-bold text-sm tracking-widest">من نحن</div>
+          <div className="text-brand font-bold text-sm tracking-widest">{t.about.eyebrow}</div>
           <h2 className="text-4xl md:text-6xl font-black leading-tight">
-            نجمع بين <span className="text-brand">الخبرة</span> والتقنية الحديثة
+            {t.about.title1} <span className="text-brand">{t.about.title2}</span> {t.about.title3}
           </h2>
-          <p className="text-lg text-muted-foreground leading-relaxed">
-            فوراكس سيرفس مركز متخصص في خدمات السيارات، نقدم لك تجربة صيانة متكاملة من تغيير الزيوت والفلاتر إلى العناية والتلميع والصيانة الشاملة. نستخدم زيوت وقطع أصلية معتمدة، ويقودنا فريق من الفنيين الخبراء.
-          </p>
+          <p className="text-lg text-muted-foreground leading-relaxed">{t.about.body}</p>
           <ul className="grid sm:grid-cols-2 gap-3">
-            {["زيوت أصلية 100%", "ضمان على الخدمة", "أجهزة فحص متطورة", "خدمة سريعة", "فنيون معتمدون"].map((f) => (
+            {t.about.features.map((f) => (
               <li key={f} className="flex items-center gap-2 bg-surface border border-border rounded-lg px-4 py-3">
                 <CheckCircle2 className="w-5 h-5 text-brand shrink-0" />
                 <span className="font-medium">{f}</span>
@@ -580,27 +609,28 @@ function About() {
 }
 
 function Testimonials() {
+  const { t } = useI18n();
   return (
     <section className="py-24 md:py-32 bg-surface">
       <div className="max-w-7xl mx-auto px-5 lg:px-10">
         <div className="text-center mb-16">
-          <div className="text-brand font-bold text-sm tracking-widest mb-3">آراء عملائنا</div>
-          <h2 className="text-4xl md:text-6xl font-black">يثق بنا الآلاف من قائدي السيارات</h2>
+          <div className="text-brand font-bold text-sm tracking-widest mb-3">{t.testimonials.eyebrow}</div>
+          <h2 className="text-4xl md:text-6xl font-black">{t.testimonials.title}</h2>
         </div>
         <div className="grid md:grid-cols-3 gap-6">
-          {testimonials.map((t, i) => (
+          {t.testimonials.items.map((item, i) => (
             <div key={i} className="bg-background border border-border rounded-2xl p-8 shadow-card">
               <div className="flex gap-1 mb-4">
-                {Array.from({ length: t.rating }).map((_, j) => (
+                {Array.from({ length: 5 }).map((_, j) => (
                   <Star key={j} className="w-5 h-5 fill-primary text-primary" />
                 ))}
               </div>
-              <p className="text-lg leading-relaxed mb-6">"{t.text}"</p>
+              <p className="text-lg leading-relaxed mb-6">"{item.text}"</p>
               <div className="flex items-center gap-3 pt-4 border-t border-border">
                 <div className="w-11 h-11 rounded-full bg-gradient-primary flex items-center justify-center font-black text-primary-foreground">
-                  {t.name[0]}
+                  {item.name[0]}
                 </div>
-                <div className="font-bold">{t.name}</div>
+                <div className="font-bold">{item.name}</div>
               </div>
             </div>
           ))}
@@ -611,6 +641,12 @@ function Testimonials() {
 }
 
 function CTA() {
+  const { t } = useI18n();
+  const cards = [
+    { icon: Phone, label: t.cta.callLabel, value: WHATSAPP_DISPLAY, href: "tel:+966559527343" },
+    { icon: MapPin, label: t.cta.locLabel, value: t.cta.locValue, href: MAP_URL },
+    { icon: Clock, label: t.cta.hoursLabel, value: t.cta.hoursValue, href: undefined as string | undefined },
+  ];
   return (
     <section id="contact" className="py-24 md:py-32">
       <div className="max-w-6xl mx-auto px-5 lg:px-10">
@@ -619,34 +655,27 @@ function CTA() {
           <div className="relative grid lg:grid-cols-2 gap-10 items-center">
             <div>
               <h2 className="text-4xl md:text-5xl font-black leading-tight mb-4">
-                جاهز لتجربة خدمة <span className="text-brand">من نوع مختلف؟</span>
+                {t.cta.title1} <span className="text-brand">{t.cta.title2}</span>
               </h2>
-              <p className="text-lg text-muted-foreground mb-8">
-                اتصل بنا الآن أو زر مركزنا واحصل على فحص مجاني شامل لسيارتك.
-              </p>
+              <p className="text-lg text-muted-foreground mb-8">{t.cta.sub}</p>
               <div className="flex flex-wrap gap-4">
                 <a href="tel:+966559527343" className="inline-flex items-center gap-2 bg-gradient-primary text-primary-foreground font-bold px-8 py-4 rounded-xl shadow-glow hover:scale-105 transition">
                   <Phone className="w-5 h-5" />
-                  اتصل الآن
+                  {t.cta.call}
                 </a>
                 <a
-                  href="https://www.google.com/maps/place/24%C2%B048'12.4%22N+46%C2%B048'10.5%22E/@24.8034335,46.8051005,17z/data=!3m1!4b1!4m4!3m3!8m2!3d24.8034335!4d46.8029118?hl=ar&entry=ttu&g_ep=EgoyMDI2MDcxMi4wIKXMDSoASAFQAw%3D%3D"
+                  href={MAP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 border border-border bg-surface/60 backdrop-blur px-8 py-4 rounded-xl font-bold hover:bg-surface transition"
                 >
                   <MapPin className="w-5 h-5" />
-                  موقعنا على الخريطة
+                  {t.cta.map}
                 </a>
               </div>
             </div>
             <div className="space-y-4">
-              {[
-                { icon: Phone, label: "اتصل بنا", value: "+966 55 952 7343", href: "tel:+966559527343" },
-                { icon: MapPin, label: "الموقع", value: "الرياض - حي إشبيليا، شارع النجاح", href: "https://www.google.com/maps/place/24%C2%B048'12.4%22N+46%C2%B048'10.5%22E/@24.8034335,46.8051005,17z/data=!3m1!4b1!4m4!3m3!8m2!3d24.8034335!4d46.8029118?hl=ar&entry=ttu&g_ep=EgoyMDI2MDcxMi4wIKXMDSoASAFQAw%3D%3D" },
-                { icon: Clock, label: "ساعات العمل", value: "السبت - الخميس: 8 ص - 4 م" },
-
-              ].map((c) => (
+              {cards.map((c) => (
                 <div key={c.label} className="flex items-center gap-4 bg-background/60 backdrop-blur border border-border rounded-xl p-5">
                   <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center shrink-0">
                     <c.icon className="w-6 h-6 text-primary-foreground" />
@@ -671,20 +700,20 @@ function CTA() {
   );
 }
 
-const SOCIAL_LINKS = [
-  { label: "واتساب", href: `https://wa.me/${WHATSAPP_NUMBER}`, Icon: MessageCircle, color: "hover:text-[#25D366]" },
-  { label: "انستقرام", href: "https://instagram.com/fourxservice", Icon: Instagram, color: "hover:text-[#E4405F]" },
-  { label: "تيك توك", href: "https://www.tiktok.com/@fourxservice", Icon: Music2, color: "hover:text-foreground" },
-  { label: "يوتيوب", href: "https://www.youtube.com/@fourxservice", Icon: Youtube, color: "hover:text-[#FF0000]" },
-  { label: "ثريدز", href: "https://www.threads.net/@fourxservice", Icon: AtSign, color: "hover:text-foreground" },
-  { label: "فيسبوك", href: "https://www.facebook.com/4xservice", Icon: Facebook, color: "hover:text-[#1877F2]" },
-  { label: "X", href: "https://x.com/4xservice", Icon: Twitter, color: "hover:text-foreground" },
-];
-
 function SocialIcons({ className = "" }: { className?: string }) {
+  const { t } = useI18n();
+  const links = [
+    { label: t.social.whatsapp, href: `https://wa.me/${WHATSAPP_NUMBER}`, Icon: MessageCircle, color: "hover:text-[#25D366]" },
+    { label: t.social.instagram, href: "https://instagram.com/fourxservice", Icon: Instagram, color: "hover:text-[#E4405F]" },
+    { label: t.social.tiktok, href: "https://www.tiktok.com/@fourxservice", Icon: Music2, color: "hover:text-foreground" },
+    { label: t.social.youtube, href: "https://www.youtube.com/@fourxservice", Icon: Youtube, color: "hover:text-[#FF0000]" },
+    { label: t.social.threads, href: "https://www.threads.net/@fourxservice", Icon: AtSign, color: "hover:text-foreground" },
+    { label: t.social.facebook, href: "https://www.facebook.com/4xservice", Icon: Facebook, color: "hover:text-[#1877F2]" },
+    { label: "X", href: "https://x.com/4xservice", Icon: Twitter, color: "hover:text-foreground" },
+  ];
   return (
     <div className={`flex flex-wrap items-center gap-2 ${className}`}>
-      {SOCIAL_LINKS.map(({ label, href, Icon, color }) => (
+      {links.map(({ label, href, Icon, color }) => (
         <a
           key={label}
           href={href}
@@ -702,23 +731,29 @@ function SocialIcons({ className = "" }: { className?: string }) {
 }
 
 function Gallery() {
+  const { t } = useI18n();
   return (
     <section id="gallery" className="py-24 md:py-32 bg-surface relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-5 lg:px-10">
         <div className="text-center mb-14">
-          <span className="inline-block px-4 py-1.5 rounded-full bg-brand/10 text-brand text-xs font-bold tracking-widest mb-4">معرض الصور</span>
-          <h2 className="text-4xl md:text-6xl font-black mb-4">لحظات من <span className="text-brand">فوراكس سيرفس</span></h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">عروضنا الحصرية، خدماتنا المجانية، ومنتجاتنا الأصلية — كل ما تحتاج معرفته في صور.</p>
+          <span className="inline-block px-4 py-1.5 rounded-full bg-brand/10 text-brand text-xs font-bold tracking-widest mb-4">{t.gallery.eyebrow}</span>
+          <h2 className="text-4xl md:text-6xl font-black mb-4">
+            {t.gallery.title1} <span className="text-brand">{t.gallery.title2}</span>
+          </h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">{t.gallery.sub}</p>
         </div>
         <div className="columns-2 md:columns-3 lg:columns-4 gap-4 [column-fill:_balance]">
-          {GALLERY.map((g, i) => (
-            <figure key={i} className="mb-4 break-inside-avoid rounded-2xl overflow-hidden border border-border bg-background group relative">
-              <img src={g.src} alt={g.caption} loading="lazy" className="w-full h-auto block transition-transform duration-500 group-hover:scale-[1.03]" />
-              <figcaption className="absolute inset-x-0 bottom-0 p-3 text-xs font-medium text-white bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition">
-                {g.caption}
-              </figcaption>
-            </figure>
-          ))}
+          {GALLERY.map((g, i) => {
+            const caption = t.gallery.captions[g.key];
+            return (
+              <figure key={i} className="mb-4 break-inside-avoid rounded-2xl overflow-hidden border border-border bg-background group relative">
+                <img src={g.src} alt={caption} loading="lazy" className="w-full h-auto block transition-transform duration-500 group-hover:scale-[1.03]" />
+                <figcaption className="absolute inset-x-0 bottom-0 p-3 text-xs font-medium text-white bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition">
+                  {caption}
+                </figcaption>
+              </figure>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -726,6 +761,7 @@ function Gallery() {
 }
 
 function Footer() {
+  const { t } = useI18n();
   return (
     <footer className="border-t border-border bg-surface py-12">
       <div className="max-w-7xl mx-auto px-5 lg:px-10 flex flex-col gap-8">
@@ -733,20 +769,20 @@ function Footer() {
           <div className="flex items-center gap-3">
             <img src={logoAsset} alt="4X Service" className="h-10 w-10" />
             <div>
-              <div className="font-black">فوراكس سيرفس</div>
-              <div className="text-xs text-muted-foreground">© {new Date().getFullYear()} جميع الحقوق محفوظة</div>
+              <div className="font-black">{t.nav.brand}</div>
+              <div className="text-xs text-muted-foreground">© {new Date().getFullYear()} {t.footer.rights}</div>
             </div>
           </div>
-          <div className="flex gap-6 text-sm text-muted-foreground">
-            <a href="#services" className="hover:text-brand">الخدمات</a>
-            <a href="#offers" className="hover:text-brand">العروض</a>
-            <a href="#branches" className="hover:text-brand">الفروع</a>
-            <a href="#about" className="hover:text-brand">من نحن</a>
-            <a href="#contact" className="hover:text-brand">تواصل</a>
+          <div className="flex flex-wrap justify-center gap-6 text-sm text-muted-foreground">
+            <a href="#services" className="hover:text-brand">{t.nav.services}</a>
+            <a href="#offers" className="hover:text-brand">{t.nav.offers}</a>
+            <a href="#branches" className="hover:text-brand">{t.nav.branches}</a>
+            <a href="#about" className="hover:text-brand">{t.nav.about}</a>
+            <a href="#contact" className="hover:text-brand">{t.footer.contact}</a>
           </div>
         </div>
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-6 border-t border-border">
-          <div className="text-sm text-muted-foreground font-semibold">تابعنا على وسائل التواصل</div>
+          <div className="text-sm text-muted-foreground font-semibold">{t.footer.follow}</div>
           <SocialIcons />
         </div>
       </div>
@@ -754,33 +790,25 @@ function Footer() {
   );
 }
 
-const quoteSchema = z.object({
-  name: z
-    .string()
-    .trim()
-    .min(2, { message: "الاسم يجب أن يكون حرفين على الأقل" })
-    .max(60, { message: "الاسم طويل جداً" }),
-  phone: z
-    .string()
-    .trim()
-    .regex(/^(\+?966|0)?5\d{8}$/, { message: "رقم جوال سعودي غير صحيح" }),
-  service: z.string().min(1, { message: "اختر نوع الخدمة" }),
-  notes: z.string().trim().max(300, { message: "الملاحظات طويلة جداً" }).optional(),
-});
-
-const SERVICE_OPTIONS = [
-  "تغيير زيت المحرك",
-  "غسيل وتلميع",
-  "فحص شامل",
-  "صيانة عامة",
-  "زينة وإكسسوارات",
-  "أخرى",
-];
-
 function QuoteForm() {
+  const { t } = useI18n();
   const [form, setForm] = useState({ name: "", phone: "", service: "", notes: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
+
+  const quoteSchema = useMemo(
+    () =>
+      z.object({
+        name: z.string().trim().min(2, { message: t.quote.errName }).max(60, { message: t.quote.errNameLong }),
+        phone: z
+          .string()
+          .trim()
+          .regex(/^(\+?966|0)?5\d{8}$/, { message: t.quote.errPhone }),
+        service: z.string().min(1, { message: t.quote.errService }),
+        notes: z.string().trim().max(300, { message: t.quote.errNotes }).optional(),
+      }),
+    [t],
+  );
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -792,21 +820,21 @@ function QuoteForm() {
         if (typeof key === "string") fieldErrors[key] = issue.message;
       }
       setErrors(fieldErrors);
-      toast.error("يرجى تصحيح الحقول المطلوبة");
+      toast.error(t.quote.toastError);
       return;
     }
     setErrors({});
     setSubmitting(true);
     const { name, phone, service, notes } = result.data;
     const message =
-      `طلب عرض سعر من موقع 4X Service%0A` +
-      `الاسم: ${encodeURIComponent(name)}%0A` +
-      `الجوال: ${encodeURIComponent(phone)}%0A` +
-      `الخدمة: ${encodeURIComponent(service)}` +
-      (notes ? `%0Aملاحظات: ${encodeURIComponent(notes)}` : "");
+      `${t.quote.waTitle}%0A` +
+      `${t.quote.waName}: ${encodeURIComponent(name)}%0A` +
+      `${t.quote.waPhone}: ${encodeURIComponent(phone)}%0A` +
+      `${t.quote.waService}: ${encodeURIComponent(service)}` +
+      (notes ? `%0A${t.quote.waNotes}: ${encodeURIComponent(notes)}` : "");
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
     window.open(url, "_blank", "noopener,noreferrer");
-    toast.success("تم فتح واتساب لإرسال طلبك");
+    toast.success(t.quote.toastSuccess);
     setForm({ name: "", phone: "", service: "", notes: "" });
     setSubmitting(false);
   };
@@ -826,13 +854,11 @@ function QuoteForm() {
       <div className="absolute inset-0 diagonal-stripe opacity-40" />
       <div className="relative max-w-6xl mx-auto px-5 lg:px-10 grid lg:grid-cols-5 gap-10 items-center">
         <div className="lg:col-span-2 space-y-6">
-          <div className="text-brand font-bold text-sm tracking-widest">طلب عرض سعر</div>
+          <div className="text-brand font-bold text-sm tracking-widest">{t.quote.eyebrow}</div>
           <h2 className="text-4xl md:text-5xl font-black leading-tight">
-            احصل على عرضك خلال <span className="text-brand">دقائق</span>
+            {t.quote.title1} <span className="text-brand">{t.quote.title2}</span>
           </h2>
-          <p className="text-muted-foreground leading-relaxed">
-            املأ النموذج وسنتواصل معك عبر واتساب فوراً بأفضل عرض يناسب سيارتك.
-          </p>
+          <p className="text-muted-foreground leading-relaxed">{t.quote.sub}</p>
           <a
             href={`https://wa.me/${WHATSAPP_NUMBER}`}
             target="_blank"
@@ -843,7 +869,7 @@ function QuoteForm() {
             {WHATSAPP_DISPLAY}
           </a>
           <div className="pt-2">
-            <div className="text-sm font-bold text-muted-foreground mb-3">تابعنا</div>
+            <div className="text-sm font-bold text-muted-foreground mb-3">{t.quote.follow}</div>
             <SocialIcons />
           </div>
         </div>
@@ -855,20 +881,20 @@ function QuoteForm() {
         >
           <div className="grid sm:grid-cols-2 gap-5">
             <div>
-              <label className="block text-sm font-bold mb-2">الاسم الكامل</label>
+              <label className="block text-sm font-bold mb-2">{t.quote.name}</label>
               <input
                 type="text"
                 value={form.name}
                 maxLength={60}
                 onChange={(e) => update("name", e.target.value)}
-                placeholder="مثال: عبدالله"
+                placeholder={t.quote.namePh}
                 className={fieldClass("name")}
                 autoComplete="name"
               />
               {errors.name && <p className="text-destructive text-xs mt-1.5">{errors.name}</p>}
             </div>
             <div>
-              <label className="block text-sm font-bold mb-2">رقم الجوال</label>
+              <label className="block text-sm font-bold mb-2">{t.quote.phone}</label>
               <input
                 type="tel"
                 dir="ltr"
@@ -876,7 +902,7 @@ function QuoteForm() {
                 maxLength={15}
                 onChange={(e) => update("phone", e.target.value)}
                 placeholder="05xxxxxxxx"
-                className={`${fieldClass("phone")} text-right`}
+                className={`${fieldClass("phone")} rtl:text-right ltr:text-left`}
                 autoComplete="tel"
               />
               {errors.phone && <p className="text-destructive text-xs mt-1.5">{errors.phone}</p>}
@@ -884,14 +910,14 @@ function QuoteForm() {
           </div>
 
           <div>
-            <label className="block text-sm font-bold mb-2">الخدمة المطلوبة</label>
+            <label className="block text-sm font-bold mb-2">{t.quote.service}</label>
             <select
               value={form.service}
               onChange={(e) => update("service", e.target.value)}
               className={fieldClass("service")}
             >
-              <option value="">— اختر الخدمة —</option>
-              {SERVICE_OPTIONS.map((s) => (
+              <option value="">{t.quote.selectService}</option>
+              {t.quote.options.map((s) => (
                 <option key={s} value={s}>
                   {s}
                 </option>
@@ -902,14 +928,14 @@ function QuoteForm() {
 
           <div>
             <label className="block text-sm font-bold mb-2">
-              ملاحظات <span className="text-muted-foreground font-normal">(اختياري)</span>
+              {t.quote.notes} <span className="text-muted-foreground font-normal">{t.quote.optional}</span>
             </label>
             <textarea
               value={form.notes}
               maxLength={300}
               rows={3}
               onChange={(e) => update("notes", e.target.value)}
-              placeholder="نوع السيارة، الموديل، أو أي تفاصيل إضافية"
+              placeholder={t.quote.notesPh}
               className={`${fieldClass("notes")} resize-none`}
             />
             {errors.notes && <p className="text-destructive text-xs mt-1.5">{errors.notes}</p>}
@@ -921,11 +947,9 @@ function QuoteForm() {
             className="w-full inline-flex items-center justify-center gap-2 bg-gradient-primary text-primary-foreground font-black py-4 rounded-xl shadow-glow hover:scale-[1.01] transition disabled:opacity-60"
           >
             <Send className="w-5 h-5" />
-            إرسال الطلب عبر واتساب
+            {t.quote.submit}
           </button>
-          <p className="text-xs text-muted-foreground text-center">
-            بالضغط على "إرسال" سيتم توجيهك إلى واتساب لإكمال طلبك.
-          </p>
+          <p className="text-xs text-muted-foreground text-center">{t.quote.hint}</p>
         </form>
       </div>
     </section>
@@ -933,13 +957,14 @@ function QuoteForm() {
 }
 
 function FloatingWhatsApp() {
+  const { t } = useI18n();
   return (
     <a
       href={`https://wa.me/${WHATSAPP_NUMBER}`}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="تواصل عبر واتساب"
-      className="fixed bottom-6 left-6 z-50 w-14 h-14 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-glow hover:scale-110 transition-transform"
+      aria-label={t.waAria}
+      className="fixed bottom-6 ltr:right-6 rtl:left-6 z-50 w-14 h-14 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-glow hover:scale-110 transition-transform"
     >
       <MessageCircle className="w-7 h-7" />
       <span className="absolute inline-flex h-full w-full rounded-full bg-[#25D366] opacity-40 animate-ping" />
@@ -948,6 +973,7 @@ function FloatingWhatsApp() {
 }
 
 function TeaWorld() {
+  const { t } = useI18n();
   return (
     <section id="tea" className="py-24 md:py-32 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-brand/5 to-transparent pointer-events-none" />
@@ -957,7 +983,7 @@ function TeaWorld() {
             <div className="absolute -inset-4 bg-gradient-primary opacity-20 blur-3xl rounded-full" />
             <img
               src={teaImg}
-              alt="عالم الشاي - ركن الضيافة في فوراكس سيرفس"
+              alt={t.tea.alt}
               loading="lazy"
               width={1280}
               height={860}
@@ -968,21 +994,18 @@ function TeaWorld() {
           <div className="order-1 lg:order-2">
             <div className="inline-flex items-center gap-2 text-brand font-bold text-sm tracking-widest mb-4">
               <CupSoda className="w-4 h-4" />
-              عالم الشاي
+              {t.tea.eyebrow}
             </div>
             <h2 className="text-4xl md:text-6xl font-black leading-tight mb-5">
-              سيارتك في العناية… <span className="text-brand">وأنت مع كوب شاي</span>
+              {t.tea.title1} <span className="text-brand">{t.tea.title2}</span>
             </h2>
-            <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-              خلّ الفني يشتغل على سيارتك، وخذ لك جلسة هدوء مع كوب شاي دافئ. عندنا الانتظار
-              له طعم ثاني — ضيافة كريمة، رائحة نعناع، ووقت يمر بسرعة.
-            </p>
+            <p className="text-muted-foreground text-lg leading-relaxed mb-8">{t.tea.body}</p>
 
             <div className="flex flex-wrap gap-3 mb-8">
-              {["شاي طازج على مدار اليوم", "ركن انتظار مريح", "ضيافة على حسابنا"].map((t) => (
-                <span key={t} className="inline-flex items-center gap-2 bg-surface border border-border rounded-full px-4 py-2 text-sm">
+              {t.tea.chips.map((c) => (
+                <span key={c} className="inline-flex items-center gap-2 bg-surface border border-border rounded-full px-4 py-2 text-sm">
                   <CheckCircle2 className="w-4 h-4 text-brand" />
-                  {t}
+                  {c}
                 </span>
               ))}
             </div>
@@ -994,7 +1017,7 @@ function TeaWorld() {
               className="inline-flex items-center gap-2 bg-gradient-primary text-primary-foreground font-bold px-7 py-4 rounded-xl shadow-glow hover:scale-105 transition-transform"
             >
               <Navigation className="w-5 h-5" />
-              موقع عالم الشاي على الخريطة
+              {t.tea.cta}
             </a>
           </div>
         </div>
@@ -1004,18 +1027,15 @@ function TeaWorld() {
 }
 
 function Stations() {
+  const { t, lang } = useI18n();
   return (
     <section id="stations" className="py-24 md:py-32 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent pointer-events-none" />
       <div className="max-w-7xl mx-auto px-5 lg:px-10 relative">
         <div className="text-center max-w-2xl mx-auto mb-14">
-          <div className="text-brand font-bold text-sm tracking-widest mb-3">شبكة محطاتنا</div>
-          <h2 className="text-4xl md:text-6xl font-black leading-tight">
-            <span className="text-brand">{stations.length}</span> محطات في خدمتك
-          </h2>
-          <p className="text-muted-foreground mt-4 text-lg">
-            تجد محطات فوراكس سيرفس في أبرز المواقع — خدمات سريعة وأصلية على مدار طريقك.
-          </p>
+          <div className="text-brand font-bold text-sm tracking-widest mb-3">{t.stations.eyebrow}</div>
+          <h2 className="text-4xl md:text-6xl font-black leading-tight">{t.stations.title(stations.length)}</h2>
+          <p className="text-muted-foreground mt-4 text-lg">{t.stations.sub}</p>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -1028,12 +1048,12 @@ function Stations() {
                 <div className="w-14 h-14 rounded-2xl bg-gradient-primary flex items-center justify-center shrink-0 shadow-glow group-hover:scale-110 transition-transform">
                   <Fuel className="w-7 h-7 text-primary-foreground" />
                 </div>
-                <h3 className="text-xl font-black leading-tight">{st.name}</h3>
+                <h3 className="text-xl font-black leading-tight">{lang === "ar" ? st.name : st.nameEn}</h3>
               </div>
 
               <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
                 <MapPin className="w-4 h-4 text-brand shrink-0" />
-                <span className="truncate">اضغط لعرض الموقع على الخريطة</span>
+                <span className="truncate">{t.stations.tap}</span>
               </div>
 
               <a
@@ -1043,7 +1063,7 @@ function Stations() {
                 className="mt-auto inline-flex items-center justify-center gap-2 bg-gradient-primary text-primary-foreground rounded-xl py-3 text-sm font-bold hover:scale-[1.02] transition shadow-glow"
               >
                 <Navigation className="w-4 h-4" />
-                الاتجاه إلى المحطة
+                {t.stations.cta}
               </a>
             </div>
           ))}
@@ -1054,22 +1074,21 @@ function Stations() {
 }
 
 function Branches() {
-  const [city, setCity] = useState<string>("الكل");
-  const cities = useMemo(() => ["الكل", ...Array.from(new Set(branches.map((b) => b.city)))], []);
-  const list = city === "الكل" ? branches : branches.filter((b) => b.city === city);
+  const { t, lang } = useI18n();
+  const [city, setCity] = useState<string>("all");
+  const cities = useMemo(() => ["all", ...Array.from(new Set(branches.map((b) => b.city)))], []);
+  const list = city === "all" ? branches : branches.filter((b) => b.city === city);
+  const cityLabel = (c: string) =>
+    c === "all" ? t.branches.all : lang === "ar" ? c : branches.find((b) => b.city === c)?.cityEn ?? c;
 
   return (
     <section id="branches" className="py-24 md:py-32 relative">
       <div className="max-w-7xl mx-auto px-5 lg:px-10">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
           <div className="max-w-2xl">
-            <div className="text-brand font-bold text-sm tracking-widest mb-3">فروعنا</div>
-            <h2 className="text-4xl md:text-6xl font-black leading-tight">
-              <span className="text-brand">{branches.length}+</span> فرع في خدمتك
-            </h2>
-            <p className="text-muted-foreground mt-4 text-lg">
-              نغطي الرياض، القصيم، والدمام — اختر أقرب فرع إليك.
-            </p>
+            <div className="text-brand font-bold text-sm tracking-widest mb-3">{t.branches.eyebrow}</div>
+            <h2 className="text-4xl md:text-6xl font-black leading-tight">{t.branches.title(branches.length)}</h2>
+            <p className="text-muted-foreground mt-4 text-lg">{t.branches.sub}</p>
           </div>
           <div className="flex flex-wrap gap-2">
             {cities.map((c) => (
@@ -1082,7 +1101,7 @@ function Branches() {
                     : "bg-surface border-border hover:border-primary/50"
                 }`}
               >
-                {c}
+                {cityLabel(c)}
               </button>
             ))}
           </div>
@@ -1096,10 +1115,10 @@ function Branches() {
             >
               <div className="flex items-start justify-between gap-3 mb-4">
                 <div>
-                  <h3 className="text-lg font-black leading-tight">{b.name}</h3>
+                  <h3 className="text-lg font-black leading-tight">{lang === "ar" ? b.name : b.nameEn}</h3>
                   <div className="inline-flex items-center gap-1 text-xs text-muted-foreground mt-1">
                     <MapPin className="w-3.5 h-3.5 text-brand" />
-                    {b.city}
+                    {lang === "ar" ? b.city : b.cityEn}
                   </div>
                 </div>
                 <div className="w-10 h-10 rounded-lg bg-gradient-primary flex items-center justify-center shrink-0 shadow-glow">
@@ -1108,7 +1127,7 @@ function Branches() {
               </div>
 
               <div className="flex flex-wrap gap-1.5 mb-5">
-                {b.services.map((s) => (
+                {(lang === "ar" ? b.services : b.servicesEn).map((s) => (
                   <span
                     key={s}
                     className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/20"
@@ -1124,7 +1143,7 @@ function Branches() {
                   className="inline-flex items-center justify-center gap-1.5 bg-background border border-border rounded-xl py-2.5 text-sm font-bold hover:border-primary transition"
                 >
                   <Phone className="w-4 h-4 text-brand" />
-                  اتصال
+                  {t.branches.call}
                 </a>
                 <a
                   href={b.mapUrl}
@@ -1133,7 +1152,7 @@ function Branches() {
                   className="inline-flex items-center justify-center gap-1.5 bg-gradient-primary text-primary-foreground rounded-xl py-2.5 text-sm font-bold hover:scale-[1.02] transition"
                 >
                   <Navigation className="w-4 h-4" />
-                  الموقع
+                  {t.branches.location}
                 </a>
               </div>
             </div>
